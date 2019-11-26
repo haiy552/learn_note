@@ -14,4 +14,4 @@
 13.创建github上的仓库，进行分布式管理，通过$ git remote add origin git@github.com:用户名/仓库名字.git
 14.git push -u origin master  发送给新的仓库
 15.git push origin master     发送仓库(仓库内是有内容的)
-16.git clone git@github.com:haiy552/gitskills.git  克隆仓库里的文件，也可以用https协议
+16.git clone git@github.com:haiy552/gitskills.git  克隆仓库里的文件，也可以 git clone git@github.com:haiy552/bootstrap.git(必须用自己的用户名) 也可以用https协议 git clone https://....
