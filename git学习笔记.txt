@@ -1,19 +1,39 @@
+cat 文件名  查看文件内容
+rm          删除删除环境下的文件
+ssh-keygen -t rsa -C "youremail@example.com"  获取公钥和密钥 在c盘用户那
+
 1.git init 初始化
-2.git add 文件名   git commit -m + “说明”  提交文件，其中git add 可以提交多个，然后用git commit 一次性多个提交
-3.git status 查看状态  有删除 有修改等等
-4.git diff看看生产环境下的文件有哪些修改
-5.git log 查看上传日志 git log --pretty=oneline 极简查看
-6.git reset --hard HEAD^  回退上一个版本  HEAD^^ 上上的版本  依次累加  但是到了一百HEAD~100
-  git reset HEAD 文件名 可以把暂存区的文件取消掉
-7.cat 文件名  查看文件内容
-8.git reset --hard 版本号  可以回滚指定版本
-9.git reflog    查看之前的历史命令,比如你忘记之前最新版本的id号，并且你的版本不是最新的，可以用来查看最新的版本号
-10.git checkout -- 文件名  就是在生产环境下，撤销更新的文件，还没存放在暂存区内
-11.rm 是删除删除环境下的文件， git rm 是参数暂存区
-12. $ ssh-keygen -t rsa -C "youremail@example.com"  获取公钥和密钥 在c盘用户那
-13.创建github上的仓库，进行分布式管理，通过$ git remote add origin git@github.com:用户名/仓库名字.git
-14.git push -u origin master  发送给新的仓库
-15.git push origin master     发送仓库(仓库内是有内容的)
-16.git clone git@github.com:haiy552/gitskills.git  克隆仓库里的文件，也可以 git clone git@github.com:haiy552/bootstrap.git(必须用自己的用户名) 也可以用https协议 git clone https://....
-17.git branch 查看当前分支
-18.git checkout -b dev  创建dev分支，从master转到dev分支
+
+2.创建github上的仓库，进行分布式管理，通过git remote add origin git@github.com:用户名/仓库名字.git
+
+3.git add 文件名           git add 可以提交多个，然后用git commit 一次性多个提交
+4.git commit -m + “说明”   提交文件
+5.git status               查看状态  有删除 有修改等等
+6.git diff                 看看生产环境下的文件有哪些修改
+7.git log                  查看上传日志 git log --pretty=oneline 极简查看
+8.git rm                   删除暂存区
+
+9.git reset --hard HEAD^   回退上一个版本  HEAD^^ 上上的版本  依次累加  但是到了一百HEAD~100
+  git reset --hard 版本号  可以回滚指定版本
+  git reset HEAD 文件名    可以把暂存区的文件取消掉
+
+10.git reflog               查看之前的历史命令,比如你忘记之前最新版本的id号，并且你的版本不是最新的，可以用来查看最新的版本号
+
+11.git branch               查看当前分支
+  git branch 分支名        创建分支
+  git branch -d 分支名     删除分支
+
+12.git checkout -- 文件名  就是在生产环境下，撤销更新的文件，还没存放在暂存区内
+   git checkout -b 分支名  创建分支，从master转到分支
+   git checkout 分支名     切换分支
+
+13.git switch -c 分支名    创建分支，从master转到分支,与checkout差不多，好理解一点
+   git switch 分支名       切换分支
+
+14.git merge 分支名        合并分支，当master时合并别的分支
+
+15.git push -u origin master  发送给新的仓库
+16.git push origin master     发送仓库(仓库内是有内容的)
+17.git clone git@github.com:haiy552/gitskills.git  克隆仓库里的文件，也可以 git clone git@github.com:haiy552/bootstrap.git(必须用自己的用户名) 也可以用https协议 git clone https://....
+17.
+18.
