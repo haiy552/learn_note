@@ -38,8 +38,12 @@ ssh-keygen -t rsa -C "youremail@example.com"  获取公钥和密钥 在c盘用�
 
 14.git merge 分支名           合并分支，当master时合并别的分支
 
-15.git push -u origin master  发送给新的仓库
-16.git push origin master     发送仓库(仓库内是有内容的)
+15.git push -u origin master  发送给新的远程仓库
+16.git push origin master     发送远程仓库(仓库内是有内容的)
+   git push origin 标签名     带标签推送到远程仓库
+   git push origin --tag      把全部的标签推送到远程仓库
+   删除远程仓库的标签就要先删除本地标签，然后推送到远程仓库合并，git tag -d 标签名=>git push origin:refs/tags/标签名
+   
 17.git clone git@github.com:haiy552/gitskills.git  克隆仓库里的文件，也可以 git clone git@github.com:haiy552/bootstrap.git(必须用自己的用户名) 也可以用https协议 git clone https://....
 17.git stash 储存，等以后恢复现场后使用，主要在用于别的分支上干活一时还不能完成，然后要处理一件急事，先把之前要干的事，储存起来
 18.git merge --no-ff -m "merged bug fix 101" issue-101   合并处理好bug的文件
@@ -57,3 +61,10 @@ ssh-keygen -t rsa -C "youremail@example.com"  获取公钥和密钥 在c盘用�
    (2).git branch --set-upstream branch-name(本地分支) origin/branch-name(远程分支)   设置远程和本地的链接
   
 26.git rebase   在查看提交日志时显示一条直线
+
+27.git tag v1.0                       创建标签
+   git tag -a 标签名 -m "说明" id号   创建带说明的标签
+   git tag                            查看所有的标签
+   git tag -d  标签名                 删除指定的标签
+   git show 标签名                    查看当前标签的详细
+   
