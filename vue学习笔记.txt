@@ -47,6 +47,9 @@ getters   跟计算机属性一样，具有监听的功能，在store中getStateCount: function(sta
 mutations 方法  mutations里的方法add(state){state.count++;}， 然后在引入到组件方法里this.$store.commit("add"), 然后放入html里
 actions   vue不建议直接在子组件中用this.$store.commit("add"),而是在actions中用，addFun(context){context.commit("add")},然后在放入子组件中addFun(){this.$store.dispatch("add")}
           具体流程: 首先在state中设置参数，然后在mutations中设置方法，然后在actions再次包装方法，然后在放入子组件的方法里在再次包装
+
+mapstate  先在子组件导入import { mapState } from 'vuex'
+
 		  
 
 关于scss的语法
