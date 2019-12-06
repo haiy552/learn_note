@@ -1,0 +1,151 @@
+查看像素和设备独立像素的关系
+window.devicePixelRatio
+
+设备的屏幕宽度: window.screen.width;
+设备的屏幕高度: window.screen.height;
+
+=================================================
+function getSize(){
+            获取设备的宽度
+            clientWidth = document.documentElement.clientWidth;
+            获取设备的高度
+            clientHeight = document.documentElement.clientHeight;
+        }
+=====================================================
+监听窗口的大小，当窗口变化了，会发生响应
+window.onresize = function() {getSize();}
+=========================================================
+<--*导入zepto包，才能用text()函数-->
+<script src="zepto.js"></script>
+<span class="width"></span>
+<--*获取类名为width的标签-->
+let width = $('.width')
+<--*将类名为width的标签内容改为以下内容-->
+width.text('PC设备Viewport的宽度为：' + clientWidth);
+=============================================================
+对于移动设备的设置
+width:设置viewport的宽度  device-width:获取当前设备的宽度
+当我们设置width=device-width，也达到了initial-scale=1的效果
+maximum-scale:设置最大的缩放比例
+minimum-scale:设置默认状态下最小的缩放比例
+写法一:
+<!--<meta name="viewport" content="width=device-width">-->
+写法二:
+<!--<meta name="viewport" content="initial-scale=1
+    user-scalable:设置是否允许用户进行缩放yes/no">-->
+综合性的写法:
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,user-scalable=no">
+=======================================================================
+对于事件
+var div=document.querySelector("div");
+addEventListener是事件函数，当要创建事件函数时使用
+touchstart是触摸事件(这是每一次的开始，都要使用的)
+touchmove是滑动事件，是持续触发
+touchend 是滑动结束,手指离开屏幕后，触发的事件
+touchcanel 是触摸以外中断事件
+mouseDown 鼠标落下
+mouseUp 鼠标抬起
+mouseClick 鼠标点击
+click 普通的点击
+写法如下:
+div.addEventListener('touchstart',function() {
+            console.log('touchstart');
+        })
+============================================================================
+e.targetTouches :手指
+e.targetTouches > 1  手指数量大于1
+e.targetTouches[0].clientX,在移动端手指的坐标   clientX clientY pageX pageY
+==========================================================================
+引入iscroll包，对于移动端的
+mouseWheel 鼠标可以滚动
+scrollbars 窗口有滚动条
+<script src="./js/iscroll.js"></script>
+var myScroll = new IScroll('#wrapper', {
+            mouseWheel: true,
+            scrollbars: true
+        })
+=============================================================================
+引入swipe.js包对于移动端
+Swipe是轮播图，auto是自动几秒钟后轮播
+.jd_banner 是div包含了很多个img
+window.mySwipe = Swipe(document.querySelector('.jd_banner'), {auto:1000});
+控制上面的轮播图的前一张和后一张  prev() 前一张  next() 下一张
+document.getElementById('prev').onclick = () => window.mySwipe.prev();
+document.getElementById('next').onclick = () => window.mySwipe.next();
+=====================================================================
+引入swiper.js包对于移动端   跟上面的swipe.js不同
+======================================================================
+当屏幕宽度大于768px时，背景色为绿色，min-width是屏幕最小的宽度，max-width是屏幕最大的宽度
+因为css是自上而下解析的，当宽度是400，>368px，而不大于 768 所以背景为绿色
+数字基本是从小到大
+@media screen and (min-width: 368px){body{background-color: green;}}
+@media screen and (min-width: 768px){body{background-color: pink;}}
+@media screen and (min-width: 1200px){body{background-color: #ccc;}}
+body {background-color: #ccc;},为了保证在0到368有背景颜色，如果设置屏幕最小宽度的话，不用考虑了
+还有别的方法
+@media screen and (max-width: 368px){body{background-color: green;}}
+@media screen and (max-width: 768px){body{background-color: pink;}}
+@media screen and (max-width: 1200px){body{background-color: #ccc;}}
+
+not就是反条件，在小于768或大于992时条件成立
+@media not screen and (min-width: 768px) and (max-width: 992px)
+在单独的移动端的情况下可以使用，上面的移动端和pc端都可以使用，而下面的只能用于移动端
+max-device-width  min-device-width
+
+当然不一定要颜色 比如在改变宽度后盒子变化宽度
+@media screen and (min-width: 1200px) {.box > div { width: 25%}}
+========================================================================
+对于移动端点击事物的规则:(要保证不可以点透),还得看jquery
+点击的目标必须是个对象类型，
+然后判断是一根手指，如果多于1根return
+然后记录起始位置和触摸的起始时间
+然后判断手指移动了几秒一般都是100到150毫秒
+然后得到移动结束后的位置和花费的时间，
+然后判断时间是否超过150毫秒
+判断结束位置到起始位置的距离(x,y),如果绝对值(x或y)<6 ，return
+然后成功移动
+zepto的用法
+.tap 是class="tap" on表示事件函数   tap就是$('.tap')的DOM元素
+$('.tap').on('tap',function() {console.log('abc')});
+=========================================================================
+bootstrap包
+col-xs-12  当屏幕宽度 < 768  会生效，这个格子会占12份，一共12份，所以占满了  xs extra small
+col-sm-6   当屏幕宽度在 >768  会生效，这个格子会占2份，一共12份，所以占1/2  sm small
+col-md-4   当屏幕宽度 >992  会生效，这个格子会占3份，一共12份，所以占1/3  md middle
+col-lg-3   当屏幕宽度 > 1200  会生效，这个格子会占4份，一共12份，所以占1/4   lg large
+所以在屏幕实现变化的时候可以当sm时占6个格在md时占3格   <div class="col-sm-6 col-md-3"></div>
+
+
+col-xs-push-2  push 是往后往右推  pull往前往左推   往右进2格，但是会与元素重叠
+<div class="col-xs-1 col-xs-push-2">2</div>
+col-xs-offset-2 向右移动2格，会占3个格子，后面的格子会先向右移动
+<div class="col-xs-1 col-xs-offset-2">2</div>
+
+<div class="col-xs-1 hidden-sm">1</div>  hidden-sm  当屏幕在sm时，会把这个格子隐藏
+在移动端和pc端的代码都写在响应时的代码中，用 hidden-xs控制 当屏幕在xs时显示移动端的页面，在md sm
+lg 时 显示pc端页面
+移动端:
+<a href="javascript:;" class="mobileImg hidden-sm hidden-md hidden-lg"><img src="./images/slide_01_640x340.jpg" alt="..."></a>
+
+pc端:
+<a href="javascript:;" class="pcImg hidden-xs" style="background-image: url('./images/slide_01_2000x410.jpg');"></a>
+========================================================================
+
+不懂区域
+
+bootsstrap  html5shiv  jquery  respond  zepto包
+使用fastclick.js
+if('addEventListener' in document) {
+        document.addEventListener('DOMContentLoaded', function() {
+            FastClick.attach(document.body);
+        }, false)
+
+
+
+window.screen.width 与 clientWith有什么不同
+dp 与 px 、pt 的区别
+initial-scale = ideal viewport / layout viewport
+touchcanel 是触摸以外中断事件
+overflow
+display
+visibility

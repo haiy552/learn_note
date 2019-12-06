@@ -1,0 +1,375 @@
+css笔记
+1.字体  
+字体大小 font-size
+字体Unicode font-family  比如楷体
+字体粗细 font-weight  normal bold bolder 或者数字 400 700 900
+字体风格 font-style  normal  斜体 italic 倾斜 oblique
+字体简写 font：font-style font-weight font-size/line-height font-family
+
+2.选择器
+html5 标签选择器 比如 div {font-size: 14px;}
+类选择器 .son {font-size: 14px;}
+多类名选择器 <div class=".son .father"></div>
+id选择器  #son {font-size: 14px;} <div id=".son"></div> 在html5标签上只能用一次
+通配符选择器 * {font-size: 14px;}
+
+伪类选择器(必须按以下的顺序写)
+：link     未访问是的变化
+：visited  已访问后的变化
+：hover    鼠标移动到的是时候
+：active   鼠标按住的时候
+
+结构伪类选择器
+:first-child  第一个元素
+:last-child   最后一个元素
+:nth-child(n)  从上到下选择一个元素
+:nth-last-child  从下往上选择一个元素
+
+3.其他的知识点
+CTRL+/ 是css和html转成注释的快捷键
+文本颜色 .son {color: red;}  可以用red #c1c1c1 rgb(0, 0, 0) rgb(10%, 10%, 0%)
+行高 .son {line-height: 14px;} 
+写了行高后块不用写height，也可以把文字垂直居中了 14px 0.875em 14%三种表示方法
+文本水平方向控制  text-align： center left right
+首行缩进 text-indent  14px 0.875em 14%三种表示方法
+字间距 letter-spacing  字与字之间的距离 14px 0.875em 14%三种表示方法
+英文单词间距 word-spacing  英文单词之间的间距,跟letter-spacing用法一样
+透明的颜色 rgba(0,0,0,0~1之间的数，表示其透明的程度)
+文字阴影 text-shadow(水平位置 垂直位置 模糊距离 rgba(0,0,0,0.3)或者rgb(0,0,0))
+对于a标签的下划线 通过改变属性text-decoration:none/underline下划线/overline上划线/line-through中划线
+对于ul 的点 用list-style：none 去掉
+对于input的点击效果 用outline:none 去掉
+
+4.块级元素，行内元素，行内块元素
+块级元素 display：block
+特性：高度，行高、外边距以及内边距都可以控制,占有页面的一行,可以容纳一切元素
+行内元素 display：inline
+特性:高、宽无效，但水平方向的padding和margin可以设置，垂直方向的无效。和相邻行内元素在一行上,行内元素只能容纳文本或则其他行内元素
+行内块元素 display：inline-block
+特性:和相邻行内元素（行内块）在一行上,但是之间会有空白缝隙,高度，行高、外边距以及内边距都可以控制
+
+5.复合选择器
+交集选择器 .son.father {} 很少使用
+并集选择器 .son, .father {} 采取一样的属性
+后代选择器 .fater .son {} <div class="fater"><div class="son"></div></div>
+对于盒子内的盒子进行设定属性
+子元素选择器 .gradfater>.fater>.son {} 只能跨一级选择，跟后代选择器不同
+属性选择器 
+div[class^=font]  表示类名前面是font的全部类名，设定属性
+div[class$=font]  表示类名后面是font的全部类名，设定属性
+div[class*=font]  表示类名中带有font的全部类名，设定属性
+
+伪元素选择器
+::before {content:"";} 在盒子前添加属性
+::after {content:"";}  在盒子后添加属性
+::first-letter {}      文本的第一个单词或字
+::first-line {}        文本第一行
+::selection {}         可改变选中文本的样式
+
+6.背景
+简写 background：#fff(rgb()/rgba()) url() 0 0/0 0 no-repeat scorll;
+url() 图片文件的位置 前面的0 0图片的摆放位置，后面的0 0图片的大小
+no-repeat repeat-x repeat-y repeat 指平铺的方式
+scorll 背景随着内容滚动， fixed 锁定背景
+快捷键是bg+,可以使用多背景
+
+background-position：x y; 是背景的位置，在精灵图的时候可以用
+background-size:14px 16px;/cover全覆盖 contain自适应覆盖
+
+7.盒子
+盒子由margin外边距 padding内边距 border边框构成
+border 的简写是bord+   border: 1px solid #ccc;
+table合并边框 border-collapse：collapse; 
+边框圆角 border-radius：16px;
+
+padding内边距 padding:上 右 下 左的距离;margin外边距也是一样
+* {padding:0; margin:0;} 清除默认边距,但是一般不这么写，会把有用的边距去掉
+一般按h1，p，img 等等{padding:0; margin:0;}
+
+margin的情况 盒子与盒子的距离按最大边距
+内部盒子与父级盒子，没有BFC的话，子集=级盒子直接把margin给父级盒子
+变成BFC可以避免 overflow:hidden;
+margin 尽量避免使用，不太兼容
+
+在默认的情况下盒子的大小计算方法:
+padding + border + width +height
+
+box-sizing: border-box 将盒子固定成用width和height就行了
+它包裹了padding和border
+
+盒子阴影 box-shadow: 水平阴影 垂直阴影 模糊距离 阴影尺寸 阴影颜色 内/外阴影
+水平阴影/垂直阴影/模糊距离/阴影尺寸 都要加尺寸(px)
+阴影颜色 rgb(0,0,0)  rgba(0,0,0,0.3)
+内/外阴影模式设定  默认外部阴影   内阴影inset
+
+8.浮动 float
+浮动不能与标准流一起布局，浮动存在标准流内
+浮动的属性 flat:left/right
+如果一个盒子内的浮动写在标准盒子前面，标准的盒子会在浮动的盒子下面
+
+盒子浮动后对后面的盒子可能存在影响，清除浮动
+浮动后的父盒子没有设定高度，就不能包容浮动的盒子
+所以要把浮动的盒子转成封闭的盒子，就有标准流的撑开父盒子的特性
+第一种就是用 属性 clear:left/right/both 消除左侧/右侧/左右两侧
+第二种就是 在浮动的盒子其html5标签后面写<br />
+以上二种不这么推荐
+
+第三种就是在父盒子的属性里添加overfolw:hidden/auto/scroll都行
+但是内容多了，就自动隐藏了
+
+第四种就是 用:afer 意思就是后面加一个可以紧贴浮动盒子的盒子，
+而这个盒子没有高度，就可以防止后面的标准流发生占位,content:"."是为了兼容火狐
+.clearfix:afer {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+.clearfix { *zoom: 1; } 保证IE6，7兼容
+
+第五种 before和arter 双伪元素去浮动 (before和arter默认都是行内元素)
+上下添加表格类似的盒子，由于没有指定高宽，
+所以没有占位置，可以防止上下标准流盒子的占位问题
+.clearfix:before,.clearfix:after {
+	content:"";
+	display:table; 触发BFC
+}
+.clearfix:after {
+	clear: both;
+}
+.clearfix {
+	*zoom: 1;
+}
+
+
+9.版心布局
+每一个页面都有版心 版心的宽度一般960px 980px 1000px 1200px
+
+10.定位布局
+基本上会使用到3种定位:固定定位fixed/相对定位relative/绝对定位absolute
+定位有4种属性:top/right/left/bottom
+
+相对定位relative:
+相对定位的盒子通过right后改变位置，占据原来的位置，移动后的盒子不占位
+移动的原点是盒子的左上角
+
+绝对定位absolute
+绝对定位的盒子是不占位子的，但是必须要在父项盒子的属性上设定相对定位
+
+固定定位fixed
+固定定位的盒子不占有位置，完全定位在页面上，滚动条无论走到哪，它都在
+
+叠放次序（z-index）
+z-index的默认属性值是0，取值越大，其盒子就在最上面显示
+没有单位，只能用于相对/绝对/固定定位的盒子上
+
+11.对于display显示/visibility可见性/overflow溢出的理解
+
+display:none/block  none隐藏，不占位  block显示 当盒子设定为none时，在触发block盒子是不占位置的
+
+visbility: visible显示/hidden隐藏   隐藏后还是占位
+
+overflow:visible默认状态/auto超出有滚动条,不超没有/hidden超出隐藏/scoll出现滚动条
+
+12.文本样式
+鼠标样式 cursor:default 箭头/pointer 小手/move 移动/text 文本
+
+轮廓 outline
+盒子在border外面还有一层，一般我们都去掉它，outline:none, 比如input标签
+
+防止拖拽文本域resize
+给textarea 设定resize:none  盒子不能拖拽变大变小了
+
+vertical-align 垂直对齐
+解释:按同一条直线布局的行内(块)盒子，定义其中一个行内(块)盒子
+的属性为vertical-align：middle 其他行内(块)盒子都会垂直居中，
+而被定义过的盒子位置不变
+vertical-align：middle/top/bottom/baseline基线(默认)没有到最底部
+有些图片没有跟父项盒子底部对齐，有缝隙，就要用它了
+
+对于英文的换行问题 word-break
+normal 自动换行
+break-all 强制换行，单词暴力拆分
+keep-all  遇到-时的单词换行，其余跟normal一样
+
+对于是否强制一行显示
+white-space:noraml换行，盒子把文字挤下去，nowrap强制一行显示
+
+文字超出了盒子，要么就是隐藏要么就是...
+必须搭配overflow：hidden 隐藏超出盒子的文字
+text-overflow：clip默认直接隐藏/ellipsis在文字后加...
+
+13.精灵图和字体图标
+很多不怎么替换的图片堆积成一张图片，宽度按最大那个排列
+目的是减少https请求，但是由于是图片，存在像素的问题，放大后会失帧
+通过background-position来定位或者直接写在background的简写上
+基本是负数，通过ps来测量位置
+精灵图还有一种滑动门的功能，就是通过padding和父项内的一个盒子，在实现不管加多少字精灵图可以随着文字增长缩短，微信
+
+字体图标就是要通过去网站上下载或者美工去做，然后转化svg
+然后在css里引用字体，然后引用的盒子在申明一下我用了这款字体，然后在盒子的html5里添加字体图标
+引用字体的代码，在下载的font.css里有 
+申明的代码是font-family:"字体名称"，字体图标的盒子基本用<i>,然后我们要把他的斜体去掉
+
+14.过渡transition,在发生变化时产生一定延迟时间
+transition:width 2s linear 开始的时间；
+width:要过渡的属性  2s:花费的时间  linear:运动曲线
+写在要过渡的盒子内
+
+15.平面变形transform
+移动 translate(x, y)  50%,50%之间盒子的一半
+
+缩放 scale(x, y)
+盒子水平和垂直缩放
+
+旋转 rotate(deg) 
+正值为顺时针，负值为逆时针
+
+确定旋转的基点:transform-origin: left top然后配合旋转使用
+
+倾斜 skew(垂直方向deg, 水平方向deg)
+
+16.3D变形transform
+通过对父项添加透视才能产生效果，perspective：200px
+transform:rotateX(180deg) 按X轴旋转
+transform:rotateY(180deg) 按Y轴旋转
+transform:rotateZ(180deg) 按Z轴旋转
+
+translateX(x) 按X轴移动
+translateY(x) 按Y轴移动
+translateZ(x) 原地放大缩小
+根据perspective：200px，translateZ(x)越接近200px就越大
+
+translate3d(x,y,z)/(0px,0px,0px)/(20%,20%,0px)
+Z轴不能是百分数
+
+backface-visibility: hidden 当图像转过90度后不可见
+
+ 16.动画animation
+ animation:动画名称 动画时间 运动曲线  何时开始  播放次数  是否反方向;
+动画名称 一定要写，写什么自己定
+动画时间 运动曲线  何时开始跟过渡一样
+播放次数  1/2/3等等  animation-iteration-count:infinite;  无限循环播放
+是否反方向 默认normal
+
+其他属性
+animation-iteration-count:infinite;  无限循环播放
+可以在:hover是触发停止
+
+格式
+创建动画，可以简写属性
+.animation {
+  animation-name: goback;
+  animation-duration: 5s;
+  animation-timing-function: ease;
+  animation-iteration-count: infinite;
+}
+动画的运动
+@keyframes goback {
+  0%{}
+  49%{
+    transform: translateX(1000px);
+  }
+  55%{
+    transform: translateX(1000px) rotateY(180deg);
+  }
+  95%{
+    transform: translateX(0) rotateY(180deg);
+  }
+  100%{
+    transform: translateX(0) rotateY(0deg);
+  }
+}
+
+伪元素选择器：
+::first-letter {}  文本的第一个词
+::first-line {}    文本的第一行
+::selection {}     选中文本后出现的样式
+
+::befor {}         元素内部开始位置创建一个元素
+::after {}         元素内部最后位置创建一个元素
+background-attachment   背景固定还是滚动
+scroll : 　背景图像是随对象内容滚动
+fixed : 　背景图像固定
+background-size: contain;  保证图片全部出现
+			     background-size: cover;  会自动调整缩放比例，保证图片始终填充满背景区域，如有溢出部分则会被隐藏
+可以使用多背景
+凹凸文字
+text-shadow: 1px 1px 1px #000, -1px -1px 1px #fff;
+
+合并边框
+border-collapse:collapse
+
+display: none| block  none是隐藏，但是不保留位置
+
+visibility   visible | hidden   显示，隐藏，保留位置
+
+overflow   visible 默认| auto  超出显示滚动条  | hidden  超出隐藏  | scroll 显示滚动条
+
+鼠标样式
+cursor: pointer 小手  | move 移动 | text 文本 | default 默认
+
+轮廓
+outline: none 去轮廓
+
+防止文本域拖拽
+resize: none
+
+vertical-align : baseline |top |middle |bottom
+它只针对于 行内元素或者行内块元素，特别是行内块元素， 通常用来控制图片/表单与文字的对齐。
+去除图片底部有空白间隙  vertical-align : top
+
+word-break:自动换行
+normal   使用浏览器默认的换行规则。   break-all   允许在单词内换行; keep-all    只能在半角空格或连字符处换行
+
+white-space  用于强制一行显示内容
+nowrap : 　强制在同一行内显示所有文本，直到文本结束或者遭遇br标签对象才换行;
+
+text-overflow 文字溢出
+clip : 　不显示省略标记（...），而是简单的裁切 ;  ellipsis : 　当对象内文本溢出时显示省略标记（...）
+
+过渡transition: 要过渡的属性  花费时间  运动曲线  何时开始;
+
+移动 translate(x, y)   transform:translate(-50%,-50%)
+
+缩放 scale(x, y)   transform:scale(0.8,1)
+
+旋转 rotate(deg)  transform: rotate(45deg)  旋转点定位  transform-origin: left top | transform-origin: 10px 10px
+
+倾斜 transform:skew(30deg,0deg)
+
+透视(perspective)
+先设置父项  perspective: 200px;
+
+当盒子翻转后时，隐藏
+backface-visibility: hidden;
+
+css动画,但是动画结束后会返回原来的位置
+.updown {
+    //fly 是引用
+    //linear 匀速
+    //infinite 循环
+    animation:fly 3s linear infinite;
+}
+
+@keyframes fly {
+    0% {
+        top: 10%;
+    }
+    50% {
+        top: 20%;
+    }
+    100% {
+        top: 10%;
+    }
+}
+
+
+flex布局
+display: flex
+flex-direction: column 垂直排列
+flex-direction: row  水平排列
+
+order控制子项目的排列顺序，正序方式排序，从小到大
+order: 1;

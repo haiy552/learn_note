@@ -1,0 +1,313 @@
+进制:
+十六进制
+var num = 0xAB
+console.log(num)  ==> 171
+
+八进制
+var num = 010;
+console.log(num)  ==> 8
+====================================================
+类型
+字符串(str),数字类型(number),整数(int),浮点类(float),布尔类，null，undefined
+数字 + 数字 = 数字的总和
+数字 + 字符串 = 数字和字符串的拼接     ==>  流程是 先把数字转化成字符串，然后与另一个字符串进行拼接
+数字/字符串 + 布尔/null/undefined 也会拼接
+
+对于类型的判断函数(typeof)
+console.log(typeof 1)  ==> number
+
+转换成字符串的函数 toString()
+用法: var num = 1233; var newNum =  num.tostring()或者toString(num)
+用运算符的方式转字符串
+用法: var num = 1233; console.log(typeof (num +  '');  ==> string
+用法: var isRight = true; console.log(typeof (isRight + '')) ==> string
+
+转数字类型Number()
+1.Number('123')  ==> 123
+2.Number(true)  ==> 1
+3.Number('123VM')  ==> NaN 会报错
+4.var num = '123'; console.log(typeof (-num)) ==> number  字符串是数字的情况下，在前面用“-”可以把类型转成数字类型
+如果用"+"会发生拼接现象
+
+转整型parseInt()
+1.parseInt('134av')  ==> 134
+2.parseInt(123.22)  ==> 123
+3.parseInt(true)  ==> NaN
+4.parseInt('av134')  ==> NaN
+
+转浮点型parseFloat()
+1.parseFloat('123')   ==>  123   typeof  是number
+2.parseInt('134av')  ==> 134
+跟整型差不多
+
+转布尔类型Boolean()
+1.Boolean('abc')  ==> true   注: 只要有参数除了null，false，'' 这几种会返回false
+2.Boolean(null)  ==> false
+3.var kong = ''; Boolean(kong)  ==> false
+===================================================
+运算符(等补充)运算的优先性
++ - * / % ++ --  &&与  ||或  !非  < >  >=   <=  ==  !=  ===  !==
+
+%整除   33 % 3 = 0   22 % 4 = 2   22不能被4整除，余2， 0可以被任何数整除
+一元运算符
+++  --
+var num = 5; ++num ==>  先让自身加一，然后返回表达式的结果
+             num++ ==>  先返回表达式结果，但是在下一句的代码开始前，可以返回+1的运算结果了
+
+var num = 1; var b = num++ + ++num  ==> 第一个为1 第二个num=2 然后++num > num =3  所以b = 4
+
+逻辑运算符(&&与  ||或  !非)
+&&与  只有true && true  ==> true     只要有个false: false && true  ==> false
+||或  只有 false || false ==> false  只有有个true:  false || true ==> true
+!非   !false ==> true  if(!(num)){}  if条件为假不执行{}里的代码
+
+关系运算符
+< >  >=   <=  ==  !=  ===  !==
+区分 ==  和 ===  两个等于是不判断类型，而三个是可以判断类型是否相同，比如'123' == 123  返回true  '123' === 123  返回false
+而!= 和 !== 也差不多多出来的等号是判断类型
+
+对于 num = num + num  的简化  num += num  如果减法就是  num -= num
+
+3元运算符
+ 1 > 2 ? 如果为true执行我 : 如果为false执行我
+================================================
+特殊符
+\n   换行
+\t   制空符
+
+======================================================
+continue  跳出小循环，没有跳出大循环
+break     直接跳出循环
+========================================================
+数组    var arr =['1','ds']   arr[0] = '1'  索引从0开始
+如果 arr[0] = 2    [2, 'ds']
+arr.length   ==> 2   数组的个数
+如果要清空数组 arr.length = 0 或者 arr = [];
+比如你要按顺序存储参数,索引为最后的参数下标 arr[arr.length] = ''
+
+
+循环语句
+1. switch语句
+        switch( num =1 ){
+            case 1:
+                console.log('true');
+                break;     //如果不写break 就可以执行下面的程序
+            default:      //就这个相当于else
+                console.log('sorry');
+                break}
+
+2. if语句  在if语句中false的情况: 0 ""  NaN  null  undefined
+
+3. while语句   while(条件){}
+
+4. do{执行指令}while(条件)   先执行指令，然后在判断条件
+
+5. for遍历语句  for(var i = 0; i < 100; i++){}
+       var count = [1,2,3,4];for(var key in count){ console.log(key)}  ==> 0,1,2,3 下标值
+
+6.冒泡排序，核心思想:比较每个数，选出最大的数放在最后，然后把最后一个数排除，其余进行比大小，比较的次数按数组的参数数量-1
+    let arr = [1,2,3,4];
+    for(let i = 1; i <= arr.length -2; i++){
+        提前预判，如果前面的数都小于后面的数，就不会进入if语句，直接进入第二个if语句跳出循环
+        var x = true;
+        for(var j = 1; j <= arr.length -i; j++){
+            if(arr[j-1] > arr[j]){
+                es6语法，跟python差不多
+                [arr[j],arr[j-1]] = [arr[j-1],arr[j]];
+                x = false;
+                console.log(1)
+            }
+        }
+        if(x){
+            break
+        }
+    }
+    console.log(arr);
+==========================================================================
+arguments 可以获取传入的参数
+函数
+在js中局部变量发生在函数中，其他的for，while都会把内部的声明的泄露给全局，所以局部变量只有在函数中
+1.函数的声明,在js中会发生预解析，直接提升函数的声明
+function fun() {}
+2.函数表达式，不会提示函数的声明，只会提升fun的声明
+var fun = function() {}
+3.自调用,不用写 fun(),写完直接调用
+(function() {})
+
+
+
+函数也可以返回函数把参数传入到返回的函数
+在函数中分好几层，产生局部变量，每一层的局部变量互不干涉，首先以局部变量为先，接下来是全局变量(预解析)
+
+
+预解析，预解析对写代码来说总会出问题，现在已es6为前提，不会产生预解析
+function fun() {} 会预解析，但与var fun = 1;会先解析 var fun,在解析function fun把之前的覆盖
+
+// 案例1
+    // var a = 25;
+    // function abc() {
+    //   alert(a);
+    //   var a = 10;
+    // }
+    // abc();
+
+    // // 预解析
+    // var a;
+    // function abc() {
+    //   // 局部作用域  预解析
+    //   var a;
+    //   alert(a);
+    //   a = 10;
+    // }
+    // a = 25;
+    // abc();
+====================================================================
+对象
+var student = {
+      name: '张飞',
+      age: 18,
+      sex: '男',
+      sayHi: function () {
+        console.log('hello');
+      }
+    };
+
+对象的访问
+   student.name
+   student["name"]
+
+删除对象
+  delete(student.fun)  删除对象的方法
+  delete(student.name) 删除对象的属性
+  delete(student)  无效
+
+构造函数
+ function Student(name, age, sex){
+    this.name = name || 'zs';
+    this.age = age || 12;
+    this.sex = sex || "男";
+    this.sayHi = function() {
+        console.log("你好")
+    }
+ }
+ 除了构造函数以外，还可以用 new Object() 来创建对象
+ var hero = new Object()
+ hero.name = "黄忠"；
+ hero.kill = () => {console.log("杀")}
+
+ 由于new Object(),创建大量的对象，代码会很多，更适合创建一些特殊的数量要求少的对象
+ 所以演变成工厂方法,当然没有构造函数那么好
+ function createHero(name, age){
+   var hero = new Object();
+       hero.name = name || 'zs';
+       hero.age = age || 12;
+       hero.kill = () => {console.log("杀")};
+       return hero;
+ }
+ =========================================================================
+ 对于普通的变量存储在内存的栈
+ 而函数，数组，对象 则存放在内存的堆
+var nun = 1;  存放栈上，获取地址，在访问的时候根据地址找到参数
+var num1 = num 会重新在栈上开辟新的地址，跟上面的地址不同
+
+如果是对象 var obj = {
+    name: 'ls'
+}
+那就会存放在堆上，在栈上存地址，在访问的时候在栈上找地址然后找参数,但是 var obj1 = obj2； obj1.name = 'zs' ==》 obj.name = 'zs'
+obj1 和 obj 是同一个地址，如果obj1，obj其中一个改变了，另一个也会改变
+
+==============================================================
+静态成员(对象)，由构造函数创建
+Math.random() 生成[0, 1)的随机小数
+Math.floor(Math.random() * (20 - 10 + 1) + 10);  [10, 20] 整数
+==================================================================================
+构造函数，需要new
+Date
+var  d = new Date();          如果传入参数ar d = new Date(1502088177998); 2017-08-07T06:42:57.998Z,里面的参数按1970-1-1开始计算的毫秒数，也可以传入'1988-8-8 8:8:8'
+console.log(d.valueOf());     距离1970-1-1相差的毫秒数   d.getTime()一样
+
+d instanceof Date             判断变量是否是日期
+
+console.log(d.getFullYear());  年
+// !--------注意：月份是从0开始的-------------
+console.log(d.getMonth() + 1);   月
+console.log(d.getDate());        日
+console.log(d.getHours());       时
+console.log(d.getMinutes());     分
+console.log(d.getSeconds());     秒
+
+var d = new Date();
+// 打印日期对象的时候。内部调用了toString()
+console.log(d);                  2019-09-26T12:15:43.520Z
+console.log(d.toString());       Thu Sep 26 2019 20:15:43 GMT+0800 (GMT+08:00)    GMT 格林威治时间   世界标准时间
+
+console.log(d.toDateString());   Thu Sep 26 2019
+console.log(d.toTimeString());   20:15:43 GMT+0800 (GMT+08:00)                    GMT+0800 (中国标准时间)
+
+console.log(d.toLocaleDateString());   2019-9-26
+console.log(d.toLocaleTimeString());   8:15:43 PM
+
+
+//3 如何计算相差的 天/时/分/秒
+    //
+    //4692437476  相差的总的毫秒值
+    //相差的总的秒数 = 4692437476 / 1000
+    //相差的天数 = 4692437476 / 1000 / 60 / 60 / 24
+    //相差的小时数 = 4692437476 / 1000 / 60 / 60 % 24
+    //相差的分钟数 = 4692437476 / 1000 / 60 % 60
+    //相差的秒数 = 4692437476 / 1000 % 60
+================================================================================
+Array 数组对象
+arr = [];
+arr instanceof Array  判断变量是否是数组
+
+// arr.push(2);  把2添加到数组的最后
+// arr.pop();    把数组最后一个数提取出来
+// arr.unshift(322);  把322添加到数组最前面
+// arr.shift();   把数组最前面的数提取出来
+// arr.sort()      对于把数组按从小到大排序，只是针对于数组内每一个参数的首个字符串来判定大小，如果 arr = [1,44,2222] ==> [1, 2222, 44]
+
+a.filter((item) =>{return item > 2})  数组的过滤，把大于2的数字过滤出来
+a.indexOf("要寻找的字符串或数字"，输入的是下标(就是把数组从下表位到数组的末尾，顺序按从左往右，截取出来，然后来寻找))     从头开始寻找参数的下标，只找一个
+a.lastIndexOf("要寻找的字符串或数字"，输入的是下标(就是把数组从下表位到数组的末尾，顺序按从左往右，截取出来，然后来寻找))  从尾开始寻找参数的下标，只找一个
+==============================================================================
+字符串
+let str = "abcd";
+slice()     str.slice(2); ==》 cd  slice会截取从下标为2到尾部的字符串，substring()和substr() 用法一样
+str.indexOf("要寻找的字符串或数字"，输入的是下标(就是把字符串从下表位到字符串的末尾，顺序按从左往右，截取出来，然后来寻找))     从头开始寻找参数的下标，只找一个，跟数组的方法一样
+str.lastIndexOf("要寻找的字符串或数字"，输入的是下标(就是把字符串从下表位到字符串的末尾，顺序按从左往右，截取出来，然后来寻找))  从尾开始寻找参数的下标，只找一个
+关于转化大小写和去空格要参考es6
+str.replace()  不懂
+
+
+=========================================================
+对于堆栈的理解
+栈先进后出
+堆前进先出
+arr.splice();       (从什么索引开始，要删除的个数)
+console.log(arr);
+
+========================================================================
+返回多个值
+ return {
+    //     year: 1,
+    //     day: 2,
+    //     hour: 3
+    //   };
+
+
+
+ this的理解
+ 在函数中指window
+ 在对象中指这个对象
+ 在构造函数中指创建的对象
+
+ let st1 = Student("li", 12)
+附加知识点:
+    //         代表单行注释
+    /*   */    代表多行注释
+
+
+    join就是可以在数组的参数上添加符号，或者数字
+
+

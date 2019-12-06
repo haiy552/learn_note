@@ -1,0 +1,87 @@
+﻿html笔记
+对于标签的兼容性，语义化
+
+列表rowspan是纵向合并
+<td rowspan="2">18</td>
+colspan="2"是横向合并
+<td colspan="2">男</td>
+
+对于name不同的单选没有联系
+就是相同的name只能选一个，而不同的name可以都选，checked是被选中
+<input  type="radio" name="sex"  /> 女 
+<input  type="radio" name="sex" /> 男
+<input  type="radio" name="sex" checked="checked"/> 人妖 
+<input  type="radio" name="sex1"/> 未知
+
+关于label 是点击输入账号就可以获取焦点
+<label>  输入账号: <input type="text" /> </label>
+多个input可以for  id来绑点焦点
+<label for="two">  输入账号: <input type="text" />   <input type="text"  id="two"/></label>
+
+给后台发送get请求或者post请求
+<form action="xxx.php" method="get" name="userMessage">
+
+可以跟selector差不多的选择栏
+<label>所属学院:  <input type="text" placeholder="请选择学院" list="xueyuan"/>
+<datalist id="xueyuan">
+	<option>java学院</option>
+	<option>前端学院</option>
+	<option>php学院</option>
+	<option>设计学院</option>
+ </datalist>
+
+语义
+<header> 语义 :定义页面的头部  页眉</header>
+<nav>  语义 :定义导航栏 </nav> 
+<footer> 语义: 定义 页面底部 页脚</footer>
+<article> 语义:  定义文章</article>
+<section> 语义： 定义区域</section>
+<aside> 语义： 定义其所处内容之外的内容 侧边</aside>
+<input type="text" value="输入明星" list="star"/> 
+
+不清楚
+<fieldset>
+    <legend>用户登录</legend>
+    用户名: <input type="text"><br /><br />
+    密　码: <input type="password">
+</fieldset>
+
+target: 是锚跳转的方式self默认 blank是新窗口
+<a href="跳转目标" target="目标窗口的弹出方式">文本或图像</a>
+在head里写<base target="_blank">,可以把a标签默认为新窗口创建链接
+
+
+
+
+让当前盒子全屏，但是div是原生的,webkit是内核名称，需要做兼容处理
+div.webkitRequestFullscreen()
+取消全屏
+document.webkitCancelFullScreen()
+判断是否全屏,返回true，false
+document.webkitIsFullScreen
+
+onchange  当发生改变了就触发事件
+
+FileReader对象
+readAsDataURL() 读取地址，读取出来的内容会存放到result里
+readAsText()    读取文本
+所以要有onload，然后把result读取出来
+
+
+设置本地储存localStorage，username就是key
+window.localStorage.setItem("username", val)
+查询
+window.localStorage.setItem("username")
+删除
+window.localStorage.removeItem("username")
+清除所有
+window.localStorage.clear()
+
+设置本地储存sessionStorage，username就是key
+window.sessionStorage.setItem("username", val);
+查询
+window.sessionStorage.getItem("username")
+删除
+window.sessionStorage.removeItem("username")
+清除所有
+window.sessionStorage.clear()

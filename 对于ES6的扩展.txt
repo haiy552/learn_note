@@ -1,0 +1,416 @@
+const arr = [
+  { foo: 'a', name: 'aaa' },
+  { foo: 'b', name: 'bbb' },
+  { foo: 'c', name: 'ccc' },
+]
+var item = arr.find(i => i.foo === 'b')  //{ foo: 'b', name: 'bbb' }
+
+
+indexs(): 遍历下标索引
+values(): 遍历value  
+entries(): 遍历下标索引和value
+let arr = ['a','b','c'];
+for(let [index, item] of arr.entries()) {
+	console.log(index, item);
+}
+
+let arr = [1,2,3];
+arr.forEach(n => console.log(n));  //1 2 3
+let newArr = arr.map(n => n + 1);  //[2, 3, 4]
+
+let arr = ['a','b','c'];
+console.log(arr.includes('d')); //返回是否包含此元素，返回布尔值
+
+
+
+
+
+__filename绝对路径+文件名
+__dirname 绝对路径
+process.argv 是一个数组，默认情况下，前两项数据分别是：Node.js环境的路径；当前执行的js文件的全路径
+process 是node参数
+
+变量.includes() 是否包含字符串
+变量.startsWith() 是否以括号里的字符串开头
+变量.endsWith()   是否以括号里的字符串结尾
+
+----------------------------------------
+在`内用${obj.name}`
+
+对于ES字符串赋值方面
+let [a,b,c] = [1,2,3];  a=1 b=2 c=3
+
+function foo(age=12){console.log(age)};  foo在传入参数的时候默认age=12 
+
+function foo({name="zs",age=12}={}){console.log(name,age)}  foo在传入参数的时候默认name="zs",age=12
+
+...在函数括号内是打包到数组
+   在其他的时候是释放数组
+------------------------------------------------------------
+对于箭头函数
+let arr = [1,2,3,4,5,6,7];
+arr.forEach((value,key) => console.log(key+"===="+value));
+箭头函数不可以new
+
+class Dog extends Animal{}继承自父项
+
+
+Buffer 的下标是1开始，一般的下标为0开始
+Buffer.isEncoding('utf8')  判断是否支持的编码
+Buffer.from('hello','ascii')  编译成进制码
+
+Buffer.byteLength() 检查进制的数量
+Buffer.concat([buf1,buf2]); 进制的数量相加
+
+let buf = Buffer.alloc(5)     先设置进制的数量
+buf.write('hello',3,2); 后写入参数和定位，3为定位，2为写入的个数
+let buf1 = buf.slice(1,3); 把buf截取 把第1位到第3位的字符串截出来，如果是重新赋值是不行的
+
+let buf = Buffer.from('hello');
+let buf1 = JSON.stringify(buf); 返回一个JSON格式
+
+----------------------------------------------------
+
+/*path*/
+取出最后一个文件名 quux.html
+path.basename('/foo/bar/quux.html','.html')  第一个参数是路径  第二个要去掉的字符串，但是必须是按结尾的顺序去除
+ 
+去掉最后一个文件名，返回/abc/qqq/www
+path.dirname('/abc/qqq/www/abc')
+
+获取扩展名.html
+path.extname('index.html')
+
+路径的格式化处理
+path.format() obj->string
+path.parse()  string->obj
+
+判断是否是绝对路径
+path.isAbsolute('/foo/eoo')  有linux和windows两种
+
+路径拼接
+path.join('/foo', 'bar', 'baz/asdf', 'quux', '../../')
+
+路径规范化
+path.normalize('/foo/bar//baz/asdf/quux/..')
+
+获取相对路径
+path.relative('/data/orandea/test/aaa', '/data/orandea/impl/bbb')
+
+环境变量分隔符(windows中使用; linux中使用:)
+path.delimiter 
+
+表示路径分隔符（windows是\ Linux是/）
+path.sep  
+
+----------------------------------------------------------------------
+/*fs*/文件操作
+stat文件的信息状态
+fs.stat('./abc',(err,stat) => {}) 第一个是路径，第二个是回调函数
+stat.isFile() 判断是否是目录
+stat.isDirectory() 判断是否是文件
+
+atime 文件访问时间
+ctime 文件的状态信息发生变化的时间（比如文件的权限）
+mtime 文件数据发生变化的时间
+birthtime 文件创建的时间
+
+文件的读取
+fs.readFile(file,['utf8'],(err,data) => {})
+utf8可以省略，具体看文件的编码是什么
+
+--------------------------------------------------------------
+
+文件的写入(清除之前的内容，然后写入内容)
+fs.writeFile(strpath,'hello nihao','utf8',(err)=>{
+    if(!err){
+        console.log('文件写入成功');
+    }
+});
+
+let buf = Buffer.from('hi');
+fs.writeFile(strpath,buf,'utf8',(err)=>{
+    if(!err){
+        console.log('文件写入成功');
+    }
+});
+
+---------------------------------------------------
+let readStream = fs.createReadStream(要复制文件的路径)
+let writeStream = fs.createWriteStream(要写入文件的路径)
+readStream.on('data',(chunk) => {
+	writeStream.write(chunk);
+});
+
+readStream.on('end',()=>{
+     console.log('文件处理完成');
+ });
+
+ 或者用管道的方法
+ fs.createReadStream(要复制文件的路径).pipe(fs.createWriteStream(要写入文件的路径));
+ ----------------------------------------------------------
+创建目录
+fs.mkdir(path.join(__dirname,'abc'),(err)=>{
+     console.log(err);
+ });
+删除目录
+fs.rmdir(path.join(__dirname,'abc'),(err)=>{
+     console.log(err);
+ });
+
+循环读取目录文件及文件名
+fs.readdir(__dirname,(err,files) => {
+	files.forEach((value,key) =>{
+		fs.stat(path.join(__dirname,value),(err,stat)=>{
+			if(stat.isFile()){
+				console.log(value+'文件');
+			}else if(stat.isDirectory()){
+				consoel.log(value+'目录');
+			}
+		});
+	});
+});
+
+/*对于初始化目录
+const path = require('path');
+const fs = require('fs');
+
+let root = 'C:\\Users\\Administrator\\Desktop\\1';
+let fileContent = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div>welcome to this</div>
+</body>
+</html>
+`;
+let initData = {
+	projectName : 'mydemo',
+	data : [{
+		name : 'img',
+		type : 'dir'
+	},{
+		name : 'css',
+		type : 'dir'
+	},{
+		name : 'js',
+		type : 'dir'
+	},{
+		name : 'index.html',
+		type : 'file'
+	}]
+};
+fs.mkdir(path.join(root,initData.projectName),(err) => {
+	if(err) return 2;
+	initData.data.forEach((value) => {
+		if(value.type == 'dir'){
+			fs.mkdir(path.join(root,initData.projectName,value.name),(err)=>{
+				if(err) return;
+				console.log(1);
+			})
+		}else if(value.type == 'file'){
+			fs.writeFile(path.join(root,initData.projectName,value.name),fileContent,(err)=>{
+				if(err) return;
+			})
+		}
+	})
+})
+*/
+/*
+    yarn工具基本使用
+
+    安装yarn工具：npm install -g yarn
+
+    1、初始化包
+    npm init
+    yarn init
+    2、安装包
+    npm install xxx --save
+    yarn add xxx
+    3、移除包
+    npm uninstall xxx
+    yarn remove xxx
+    4、更新包
+    npm update xxx
+    yarn upgrade xxx
+    5、安装开发依赖的包
+    npm install xxx --save-dev
+    yarn add xxx --dev
+    6、全局安装
+    npm install -g xxx
+    yarn global add xxx
+    7、设置下载镜像的地址
+    npm config set registry url
+    yarn config set registry url
+    8、安装所有依赖
+    npm install
+    yarn install
+    9、执行包
+    npm run
+    yarn run
+*/
+对于 markdown-it的使用把md转html
+const fs = require('fs');
+const path = require('path');
+const md = require('markdown-it')();
+要转换的文件
+let mpath = 'C:\\Users\\Administrator\\Desktop\\1.md';
+转换成的文件
+let dpath = 'C:\\Users\\Administrator\\Desktop\\1.html';
+两个文件转换的桥梁
+let tplpath = 'C:\\Users\\Administrator\\Desktop\\tpl.html';
+
+fs.readFile(mpath,'utf8',(err,data) => {
+	if(err) return;
+	//把md文件的内容提取出来，转utf8格式
+	let result = md.render(data);
+	//读取tpl.html的内容
+	let tpl = fs.readFile(tplpath,'utf8',(err,tplData) => {
+		if(err) return;
+		//把tpl.html上的<%content%>部分替换成result
+		tplData = tplData.replace('<%content%>',result);
+		//然后把替换好的，写入到1.html，如果只是替换就不用桥梁直接，写入新的文件
+		fs.writeFile(dpath,tplData,(err)=>{
+			console.log('成功')
+		})
+	})
+})
+--------------------------------------------------------------
+http
+
+
+http.createServer()
+两种方式
+http.createServer((reg,res)=> {}).listen(端口,ip,回调函数)
+http.createServer().on('request',(req,res)=>{}).listen()
+
+npm install nrm -g  安装nrm
+npm install -g cnpm --registry=https://registry.npm.taobao.org 淘宝镜像
+
+1、req对象是Class: http.IncomingMessage的实例对象  请求信息
+2、res对象是Class: http.ServerResponse的实例对象   服务响应 
+ 
+req.url.startsWith('/index') 请求的地址后面是/index 
+res.end('index')  响应成功后页面显示index
+
+node 实现路由的分发
+const http = require('http');
+const path = require('path');
+const fs = require('fs');
+
+let readFile = (url,res) => {
+	fs.readFile(path.join(__dirname,'www',url),'utf8',(err,fileContent) => {
+		if(err){
+			res.end('server error');
+		}else{
+			res.end(fileContent);
+		}
+	})
+}
+http.createServer((req,res) => {
+             startsWith以什么开头
+	if(req.url.startsWith('/index')){
+		readFile('index.html',res);
+	}else if(req.url.startsWith('/about')){
+		readFile('about.html',res);
+	}else if(req.url.startsWith('/login')){
+		readFile('login.html',res);
+	}else {
+		res.writeHead(200,{
+			'Content-Type':'text/plain; charset=utf8'
+		});
+		res.end('页面被狗狗要走了')
+	}
+}).listen(3000,()=>{
+	console.log('running')
+})
+-----------------------------------------------------
+url get post
+.parse()能把整个域名转成对象
+let str = 'http://www.baidu.com/abc/qqq?flag=123&keyword=java';
+let ret = url.parse(str,true);   true是控制query的参数的格式，true为对象，false是字符串
+ret.format()能把对象转成域名
+
+querystring.parse      把字符串转对象 是url后面的一串 跟url.parse()不同
+querystring.stringify  把对象转字符串 是url后面的一串
+
+Content-Type 是访问文件的属性
+编码的问题不太懂
+
+
+let app = require('express')();
+app.use((req,res,next)=>{
+	console.log('有人访问');
+	next();
+});
+next:可以连接下面的app.use
+next('route')可以跳过接下来的1个步骤，连接相对于自己的第二个步骤
+
+res.send():括号里面的内容，可以在浏览器上显示
+而res.send()只能用于最后，且只能用一次
+
+设置访问顺序
+var cb0 = function (req, res, next) {
+  console.log('CB0');
+  next();
+}
+
+var cb1 = function (req, res, next) {
+  console.log('CB1');
+  next();
+}
+
+var cb2 = function (req, res) {
+  res.send('Hello from C!');
+}
+
+app.get('/example', [cb0, cb1, cb2]);
+
+app.listen(3000,()=>{
+    console.log('running...');
+});
+
+
+
+去空格
+s.trim() // "abc"
+trimStart()，trimEnd()
+
+补参数
+'x'.padStart(5, 'ab') // 'ababx'
+'x'.padStart(4, 'ab') // 'abax'
+
+'x'.padEnd(5, 'ab') // 'xabab'
+'x'.padEnd(4, 'ab') // 'xaba'
+
+'12'.padStart(10, 'YYYY-MM-DD') // "YYYY-MM-12"
+'09-12'.padStart(10, 'YYYY-MM-DD') // "YYYY-09-12"
+
+查看是否包含字符串，返回布尔
+let s = 'Hello world!';
+
+s.startsWith('Hello') // true
+s.endsWith('!') // true
+s.includes('o') // true
+
+对于字符串赋值
+let [a, b, c] = [1,2,3]  a = 1, b = 2, c = 3
+let {a, b, c} = {a:1, b:2, c:3} a = 1, b = 2, c = 3
+
+
+
+
+
+
+不懂的
+f.apply(null, arr)
+箭头函数的理解
+不能作为构造函数使用
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+还有import的用法

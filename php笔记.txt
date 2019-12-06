@@ -1,0 +1,134 @@
+对于对象的写法
+把：换成 =>
+把key带上引号
+$arr = array("name1"=>"tom","name2"=>"jerry","name3"=>"spike")
+
+把+换成. 进行拼接
+echo '{"username":"' .$uname.  '","password":"' .$pw.  '"}';
+
+print_r($arr); 打印
+$ 声明
+在使用php时，需要<?php   ?>包裹
+
+自己定义的函数名，在使用的时候是不区分大小的
+
+单引号对于其中的变量当作普通的字符串来处理
+双引号对于其中的变量会把变量解析成变量值
+============================================================
+<?php
+      通过get的方式获取请求的数据
+    $uname = $_GET['username'];
+    $pw = $_GET['password'];
+ ?>
+ ======================================================
+<?php
+      通过post的方式获取请求的数据
+    $uname = $_POST['username'];
+    $pw = $_POST['password'];
+ ?>
+ =======================================================
+ xml的php
+ <?php
+    header("Content-Type:text/xml;");//这里设置响应头信息，保证浏览器可以把相应内容识别为xml文件类型
+
+    $arr = array();
+    $arr[0] = array("name"=>"三国演义","author"=>"罗贯中","desc"=>"一个杀伐纷争的年代");
+    $arr[1] = array("name"=>"水浒传","author"=>"施耐庵","desc"=>"108条好汉的故事");
+    $arr[2] = array("name"=>"西游记","author"=>"吴承恩","desc"=>"佛教与道教斗争");
+    $arr[3] = array("name"=>"红楼梦","author"=>"曹雪芹","desc"=>"一个封建王朝的缩影");
+ ?>
+<?xml version="1.0" encoding="utf-8" ?>
+<booklist>
+    <book>
+        <name><?php echo $arr[0]['name'] ?></name>
+        <author><?php echo $arr[0]['author'] ?></author>
+        <desc><?php echo $arr[0]['desc'] ?></desc>
+    </book>
+    <book>
+        <name><?php echo $arr[1]['name'] ?></name>
+        <author><?php echo $arr[1]['author'] ?></author>
+        <desc><?php echo $arr[1]['desc'] ?></desc>
+    </book>
+    <book>
+        <name><?php echo $arr[2]['name'] ?></name>
+        <author><?php echo $arr[2]['author'] ?></author>
+        <desc><?php echo $arr[2]['desc'] ?></desc>
+    </book>
+    <book>
+        <name><?php echo $arr[3]['name'] ?></name>
+        <author><?php echo $arr[3]['author'] ?></author>
+        <desc><?php echo $arr[3]['desc'] ?></desc>
+    </book>
+</booklist>
+=====================================================
+json数据和普通的js对象的区别：
+1、json数据没有变量
+2、json形式的数据结尾没有分号
+3、json数据中的键必须用双引号包住
+
+json_encode() 作用：就是把数组转化成json形式的字符串
+$arr = array("name1"=>"tom","name2"=>"jerry","name3"=>"spike");
+$str = json_encode($arr);
+echo "$str"  返回给前端
+========================================================
+关于php用code索引书籍
+<?php
+    // $code = $_GET['code'];
+    $code = $_POST['code'];
+
+    $books = array();
+    $books['sgyy'] = array('bookname'=>'三国演义','author'=>'罗贯中','desc'=>'一个杀伐纷争的年代');
+    $books['shz'] = array('bookname'=>'水浒传','author'=>'施耐庵','desc'=>'108条好汉的故事');
+    $books['xyj'] = array('bookname'=>'西游记','author'=>'吴承恩','desc'=>'佛教与道教的斗争');
+    $books['hlm'] = array('bookname'=>'红楼梦','author'=>'曹雪芹','desc'=>'一个封建王朝的缩影');
+    // 这里的array_key_exists用来判断数组中没有对应键
+    if(array_key_exists($code,$books) == 1){
+        $book = $books[$code];//这里根据参数获取一本书的信息
+        echo json_encode($book);
+    }else{
+        echo '{"flag":0}';
+    }
+ ?>
+======================================================================
+<?php
+    sleep(3);   //执行到这里的时候等待3秒
+    $arr = array();
+    $arr[0] = array("name"=>"三国演义","author"=>"罗贯中","category"=>"古典文学","desc"=>"一个封建王朝的缩影");
+    $arr[1] = array("name"=>"水浒传","author"=>"施耐庵","category"=>"古典文学","desc"=>"108好汉的故事");
+    $arr[2] = array("name"=>"三国演义","author"=>"吴承恩","category"=>"古典文学","desc"=>"佛教与道教的斗争");
+    $arr[3] = array("name"=>"三国演义","author"=>"曹雪芹","category"=>"古典文学","desc"=>"一个封建王朝的缩影");
+?>
+
+<?php foreach ($arr as $value) {?>
+   <tr>
+    <td><?php echo $value["name"]; ?></td>
+    <td><?php echo $value["author"]; ?></td>
+    <td><?php echo $value["category"]; ?></td>
+    <td><?php echo $value["desc"]; ?></td>
+   </tr>
+<?php } ?>
+==================================================
+函数
+gettype()  判断类型
+count()    判断数组长度
+for($i=0;$i<count($arr);$i++){
+     echo $arr[$i].'<br>';//这里的分号不可以省略，而js中的结尾分号可以省略，但是推荐加上分号。
+}
+
+foreach($arr as $value){
+    echo $arr.'<br>';
+}
+
+$arr = array("username"=>"zhangsan","age"=>"12");
+foreach($arr as $key => $value){
+    echo $key.'===='.$value.'<br>';
+}
+
+
+不懂
+if($value->id == $pId)
+-> 不懂  $value[id]吗
+array_push($cityData,$value)
+
+
+

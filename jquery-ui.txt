@@ -1,0 +1,35 @@
+导入css样式
+<link rel="stylesheet" href="css/jquery.fullPage.css">
+导入插件
+<script src="js/jquery.min.js"></script>
+<!-- jquery.easings.min.js 是必须的，用于 easing 参数，也可以使用完整的 jQuery UI 代替 -->
+<script src="js/jquery.easings.min.js"></script>
+<script src="js/jquery.fullPage.js"></script>
+
+html格式
+<div id="fullpage">
+        <div class="section section1">1</div>
+
+        <div class="section">2</div>
+        <div class="section">3</div>
+        <div class="section">4</div>
+</div>
+
+js文件
+$(function(){
+    $('#fullpage').fullpage();
+    navigation: true,      开启导航
+    //在滚动后屏幕后时候触发  index是当前的屏幕的序号，从0开始
+    afterLoad: function(anchorLink, index) {}
+    //在滚动时屏幕时触发  nextIndex是下一个序号  direction 判断往上滚动还是往下滚动 值是 up 或 down。
+    onLeave: function(index, nextIndex, direction) {}
+});
+
+
+
+
+
+
+
+
+

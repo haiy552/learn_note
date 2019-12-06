@@ -1,0 +1,263 @@
+对于工厂函数
+function createHero(name, blood, weapon) {
+  var o = new Object();
+  o.name = name;
+  o.blood = blood;
+  o.weapon = weapon;
+  o.attack = function () {
+    console.log(this.weapon + ' 攻击敌人');
+  }
+  return o;
+}
+===============================================================
+对于构造函数,在创建实例时，如果实例的__proto__更改，对构造函数有影响
+function Hero(name, blood, weapon) {
+  this.name = name;
+  this.blood = blood;
+  this.weapon = weapon;
+
+  this.attack = function () {
+    console.log(this.weapon + ' 攻击敌人');
+  }
+}
+let hero = new Hero("刘备"，"100","剑")；
+=========================================================
+instanceof 判断某个对象是否是某个构造函数的实例/对象
+hero instanceof Hero   //true
+获取对象的具体类型   不建议
+// console.log(hero.constructor === Hero);
+实例对象的constructor 是返回的是构造函数的函数
+========================================================
+当我们全部改变构造函数的prototype的时候，需要重新设置constructor属性
+数组或者String 中的prototype是不可以修改的，只能添加方法
+    Student.prototype = {
+      constructor: Student,
+      sayHi: function () {
+        console.log('sayHi');
+      }}
+=======================================================
+构造函数,添加静态元素后，实例对象无法访问添加的静态元素
+比如 Hero.sex = "男";     hero.sex => undefined
+=======================================================
+给构造函数添加内置函数
+Hero.prototype.sayHi = function() {
+     console.log("大家好" + this.name)
+};
+
+给构造函数添加属性
+Hero.prototype.sex = "男";
+
+hero.__proto__ 内就是Hero.prototype内的方法或属性
+h1.__proto__.__proto__ === Hero.prototype.__proto__  === Object.prototype
+====================================================
+对于原生js的用法是定义构造函数 => 设定属性 => 设定方法  主要是为了方便，简洁
+
+===================================================
+bind: 通过给函数添加this的指向，返回新的函数
+let x = function() {console.log(this.a)};
+let arr = {a: 'abc'};
+let x1 = x.bind(arr);
+x1() =>   this.a  a就会指向arr里的a  =>  "abc"
+
+call()：也是改变this指向,但是可以自身调用
+let x = function() {console.log(this)}
+let arr = {a: "abs"}
+x.call(arr)   this指向会指向arr,当执行这段话时，函数就调用了
+
+apply(): 跟call一样，不过他只有二个参数可以导入一个是this的指向，一个是数组
+let x = function(b, c) {console.log(this); console.log(b+c)}
+let arr = {a: "abs"}
+x.apply(arr, [1,2]);
+可以通过这三个引用内置函数，比如
+Math.max.apply(null, arr); ||  Math.max.apply(Math, arr)
+
+------------------------------
+function Person(name, age, sex) {
+  this.name = name;
+  this.age = age;
+  this.sex = sex;
+}
+Person.prototype.sayHi = function () {
+  console.log(this.name);
+}
+
+// 子类型
+function Student(name, age, sex, score) {
+通过call，改变this的指向，继承Person,如果不用call和this是做不到继承,只会出现undefined
+  Person.call(this, name, age, sex);
+  this.score = score;
+}
+-----------------------------------------
+继承父类？？？？
+子类继承父类的方法 ？？？
+
+======================================================
+函数的自调用
+(function() {}) ()
+===================================================
+在if中不会对function声明提升，ie6会提升
+===================================================
+new Function()  通过new 只要把参数和执行方法带入同一个刮号内就行
+var fn = new Function('a', 'b', 'console.log(a + b)');
+fn(1, 2);
+=======================================================
+this的指向
+1.function() {}  这里的this的指向是window
+2. let obj = {fn: function() {}}  fn这里的this指向是obj
+3. btn.onclick = function() {}    事件触发回调函数 this指向btn
+4. 对于构造函数，this指向构造函数新建的实例对象
+5. 对于setInterval() this指向window
+======================================================
+filter的使用方法
+x.filter(function(data) {return data !== "" })
+=====================================================
+sort是排序大小
+let arr = [1,2,6,3,4,5];
+arr.sort(function(a,b) {return a-b});
+=====================================================
+函数内接受的所有参数
+arguments
+========================================================
+;(function(){
+    let tool = {
+        random: function(min,max) {
+          return parseInt(Math.random()*(max-min))+min
+     }
+    }
+    匿名函数暴露方法
+    window.tool = tool;
+});
+======================================================
+闭包
+能把随机得到的数，通过返回新的函数，把random的值存在内存中，然后通过调用新的函数，去访问random，而不会激活随机函数
+function getRandom() {
+  var random = parseInt(Math.random() * 10) + 1;
+  return function () {
+    返回一个函数，把random储存在新的函数实例中
+    return random;
+  }
+}
+自调用
+(function (i) {
+  li.onclick = function () {
+    // 2 点击li的时候输出当前li对应的索引
+    console.log(i);
+  }
+})(i);
+
+用onclick,闭包
+function makeFun(size) {
+ return function () {
+   document.body.style.fontSize = size + 'px';
+ }
+}
+btn.onclick = makeFun(12)    makFun()函数会调用，如果不用闭包，函数直接调用，事件函数就没有意义了
+或者也可以用别的方法
+btn.onclick = function() {fun()}  也可以简洁代码
+
+把this导入闭包中
+var object = {
+  name: "My Object",
+  getNameFunc: function () {
+    var that = this;
+    return function () {
+      return that.name;
+    };
+  }
+};
+
+====================================================
+递归,对于递归的方法，清楚知道
+// 斐波那契数列 1、1、2、3、5、8、13、21、34、.....
+
+function fn(n) {
+  if (n === 1 || n === 2) {
+    return 1;
+  }
+  return fn(n - 1) + fn(n - 2);
+}
+==============================================
+浅拷贝  就是把原对象拷贝到另一个对象上，而这二个对象没有关联，当源对象改了，对复制过的对象没有影响
+深拷贝  就是用递归的方法，把从浅入深的拷贝，当源对象改了，对复制过的对象没有影响
+ function copy(obj1,obj2){
+    for(let key in obj1) {
+        let item = obj1[key];
+        if (item instanceof Object) {
+            obj2[key] = {};
+            copy(item, obj2[key]);
+        } else if (item instanceof Array) {
+            obj2[key] = [];
+            copy(item, obj2[keyy])
+        } else {
+            obj2[key] = obj1[key]
+        }
+     }
+}
+=================================================
+正则
+i 忽略大小写  g 全局匹配  字符串
+^ 开头
+$ 结尾
+[1-9]   1到9中的随便一个数字
+{5}     有5个，按前面相同类型的字符
+{1,5}   有1个到5个，按前面相同类型的字符
+\d      数字类型
+\w      字符类型
++       是\d+  一个或多个
+.       需要转义\
+
+^[1-9]\d{5}$    1到9的数字字段有5个，以数字开头，以数字结尾
+^\d{4}-\d{1,2}-\d{1,2}$   以数字开头的4位数，中间为"-1位数或2位数-",以1位数或2位数结尾
+-------------------------------------------------------------------
+普通的方法
+var regularExpression = new RegExp('ab[a-z]', 'i');
+var str = 'aBd';
+console.log(regularExpression.test(str));
+简化
+var regularExpression = /ab[a-z]/gi;
+var str = 'aBd';
+console.log(regularExpression.test(str));
+----------------------------------------------------------------
+let req = /ab[a-z]/i;
+req.test()    匹配     => 返回true 或 false
+req.exec()    提取一个
+
+字符串的正则方法
+let str ="2015-5-10";
+let req = /\d{4}/g;
+str.match(req)    => 返回的是数组，提取匹配到的所有数
+
+str.split(/[-/]/)  把字符串按-或者/ 分割成数组
+把分割好的，用.join(""),就可以合并成字符串
+arr.join('') 或者 arr.join("+")
+
+str.trim()             去掉前后空格
+str.replace("","x")    这样只能替换第一个， str.replace(/ /g, "s") 全局替换
+------------------------------------------------------------------
+按组提取
+var str = 'xxxx@itcast.com';
+var reg = /(\w+)@(\w+)\.(\w+)/;
+reg.test(str);   req.exec(str)或str.match(req)都可以
+// 进行下面的步骤前,必须要匹配
+console.log(RegExp.$1);  //相对于第一个刮号 => xxxx
+console.log(RegExp.$2);  //相对于第二个刮号 => itcast
+console.log(RegExp.$3);  //相对于第三个刮号 => com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

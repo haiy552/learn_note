@@ -1,0 +1,215 @@
+ajax
+================================================
+get的请求
+先创建对象
+/*let xhr = new XMLHttpRequest();
+//let xhr = new ActiveXObject("Microsoft.XMLHTTP");//IE6*/
+兼容方法
+let xhr;
+if(window.XMLHttpRequest){
+    xhr = new XMLHttpRequest();//标准
+}else{
+    xhr = new ActiveXObject("Microsoft");//IE6
+}
+let param = 'username='+用户名+'&password='+密码;
+通过get向后台传递值(xx.php)
+encodeURI  是对中文参数编码
+这里的true是表示异步，false是同步
+xhr.open("get"，"./xx.php?"+encodeURI(param),true);
+发送
+xhr.send(null)
+xhr.onreadystatechang = () => {
+    查看代码是否被服务器解析，当4时，解析成功
+    if(xhr.readyState === 4){
+        当状态码为200时，获取数据成功
+        if(xhr.status === 200){
+              data 是后台返回的值
+            let data = xhr.responseText;
+            if(data === "1"){
+            }else{
+            }
+        }
+    }
+}
+==============================================
+post请求
+let xhr;
+if(window.XMLHttpRequest){
+    xhr = new XMLHttpRequest();//标准
+}else{
+    xhr = new ActiveXObject("Microsoft");//IE6
+}
+xhr.open('post','04post.php',true);
+//跟get不一样，post要设置请求头信息
+xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+
+//post请求参数通过send传递，不需要通过encodeURI()转码
+let param = 'username='+用户名+'&password='+密码;
+xhr.send(param)
+
+xhr.onreadystatechange = () => {
+    if(xhr.readyState === 4){
+        if(xhr.status === 200){
+            响应成功，返回后台传回来的值
+            console.log(xhr.responseText)
+        }
+    }
+}
+=================================================
+状态码
+xhr.readyState
+readyState=0表示xhr对象创建完成
+readyState=1表示已经发送了请求   就是xhr.send()
+
+readyState=2 浏览器已经收到了服务器响应的数据
+readyState=3 浏览器正在解析数据
+readyState=4 数据已经解析完成，可以使用了，但是这个数据不一定是正常的
+所以判断http的状态码
+200表示响应成功
+404没有找到请求的资源
+500服务器端错误
+====================================================
+对于请求的是xml数据
+
+这种数据格式的弊端：
+    1、元数据占用的数据量比较大，不利于大量数据的网络传输
+    2、解析不太方便
+
+在请求的过程跟post差不多
+在判断http===200后,把xml的数据请求过来
+let data = xhr.responseXML;
+然后跟dom的方法差不多了
+==================================================
+json数据和普通的js对象的区别：
+1、json数据没有变量
+2、json形式的数据结尾没有分号
+3、json数据中的键必须用双引号包住
+通过var data = xhr.responseText;接受json数据
+let str = '{"name":"zzhang","age":"12"}'
+let obj = JSON.parse(str)  => 把json格式的字符串转对象
+let str1 = JSON.stringify(obj)  把对象转字符串，回到了起点
+=====================================
+ajax api函数
+ajax("文件.php","请求方式","发送的数据",[数据格式"text"/"json"],回调函数(data) => {data是请求来的参数,已经把json格式的字符串转对象了})
+ajax('./11.php','get','code='+code,'json',function(data){})
+或者
+let arr = {type: 'post',  //'get'
+url: './11.php',
+data: {code:code},  //第二个code是传入的参数
+dataType: 'json',    //xml json text html script jsonp
+async : false,       //同步和异步  false为同步
+success: function(data) {},
+error: function(data) {}
+}
+$.ajax(arr);
+==================================================
+在html中通过form，以post方式请求后台
+<form action="./page5-post.php" method="post"></form>
+===============================================
+跨域请求
+$.ajax({
+url : 'http://localhost/cross/ems.php',
+data : {code:code},
+不懂
+jsonpCallback:'abc',
+跨域传值
+jsonp:'cb',
+跨越的类型都是jsonp
+dataType:'jsonp',
+success:function(data){})
+====================================================
+如果第二次ajax请求依赖于第一次请求结果，那么第二次请求必须放到回调函数的内部
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+不懂
+$.each(ems,function(i,e){})
+.change()
+
+
+
+
+跟vue差不多
+公共组件
+<div id="container"></div>
+    要设置id， type必须要
+    <script id="test" type="text/html">
+    {{if isAdmin}}
+        <h1>{{title}}</h1>
+    <ul>
+         遍历 list
+        {{each list as value i}}
+        <li>索引 {{i + 1}} : {{value}}</li>
+        {{/each}}
+    </ul>
+     {{if}}
+</script>
+    <script>
+            let data = {
+                title: "例子",
+                isAdmin: true,
+                list: ["文艺","博客","摄影","电影"]
+            };
+            template是传入的函数包
+            test是上面的script的id，data是传入test内
+            let html = template("test", data);
+            let con = document.getElementById("container");
+           con.innerHTML= html
+
+子组件
+    $(() => {
+                let sou = `<ul>
+                    {{each list as value i}}
+                    <li>{{value}}</li>
+                    {{/each}}
+                </ul>`;
+
+                let data = {list:["是谁","sdfs ", "sdfs"]};
+                根据模板生成渲染函数；compile方法返回值是一个函数
+                let render = template.compile(sou);
+                // render的作用就是用数据渲染静态标签内容
+                let html = render(data);
+                // let html = template("sou", data);
+                $("#con").html(html);
+            })
+
+
+嵌入式
+    <div class="box"></div>
+    <script type="text/html" id="test">
+        {{title}}
+        {{include "con"}}
+    </script>
+    <script type="text/html" id="con">
+        <ul>
+            {{each list as value}}
+            <li>{{value}}</li>
+            {{/each}}
+        </ul>
+    </script>
+    <script>
+        $(() => {
+            let data = {
+                title: "头",
+                list: ['1','2','3','4']
+            };
+            let html = template("test", data);
+            $(".box").html(html)
+        })
+    </script>
+
+
+
+{{#value}}  加了#号会把<span style="color:#f00">hello world</span>，里面的样式解析出来

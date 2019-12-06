@@ -1,0 +1,206 @@
+﻿注意:在jquery中不能用() => {},程序识别不了，下面只是为了写起来简洁才用了这样的写法,不过$(() => {})行得通
+1.获取DOM对象
+
+        (1).<div id='box'></div>                              $('#box')
+        (2).<div class='box'></div>                           $('.box')
+        (3).<div></div>                                       $('div')
+        (4). <li class="cls"><li>                             $("li.cls")   有筛选类名为  li.cls
+        (5). <div></div><li></li><p></p>                      $("div,li,p")
+
+        (6). div里面的所有p标签                                $('div p')
+        (7). div里面的所有子元素(p标签)                        $('div>p')
+        (8). div后面的第一个p标签<div></div><p></p>            $('div+p')
+        (9). div后面的所有p标签                               $('div~p')
+
+        (10). 选中偶数行,按0开始计算，0为偶数,所以第一行为偶数   $("#uu>li:even")
+        (11). 选中奇数行,也所以第二行为奇数                     $("#uu>li:odd")
+        (12). 选中索引等于4的标签                               $("ul>li:eq(4)")
+        (13). 选中索引小于4的标签                               $("ul>li:lt(4)")
+        (14). 选中索引大于4的标签                               $("ul>li:gt(4)")
+        (16). 选中索引不是4的标签                               $("ul>li:not(4)")    注意在用变量导入的时候，$(".img>li:eq("+h+")").show();
+        (17). 选中父元素里的所有子元素                          $(".wrap").find('li')
+        (18). 选中所有的兄弟元素包括自己                        $("li").siblings("li")   当.siblings()时
+        (19). 选中第一个子元素                                 $("li").children('a')
+        (20). 选中元素前面的全部兄弟元素                        $("li").prevAll()
+        (20). 选中元素后面的全部兄弟元素                        $("li").nextAll()
+
+    1.1.DOM元素的获取
+        $('#box').get(0)
+        $('#box')[0]     ==>  return <div id='box'></div>
+
+    1.2. event获取绑定事件的元素
+        只有元素绑定过
+
+2.事件函数
+    (1) 鼠标点击 .click
+        $('#btn').click( () => {
+            $('div').css({'color': 'red', 'font-size': '12px'}) })
+
+        原生用法
+        $('#btn').onclick = () => {}
+
+    (3) 鼠标进入 .mouseover
+            $('#btn').mouseover( () =>  {
+                        $('div').css({'color': 'red', 'font-size': '12px'}) })
+
+    (4) 鼠标移出 .mouseout
+=========================================================================================
+    在事件函数中的其他函数,最后可以用回调函数
+    (5) 鼠标点击隐藏  .hide()
+            $('div').hide()      如果里面有参数.hide(500),表示500毫秒后完成隐藏，也可以写字符串  slow  normal  fast
+                                 还有用递归.hide(500, argument.callee); show也一样，可以逐个隐藏
+                                 $("#btn1").click(function() {
+                                         $("div>img").last('img').hide(500, function() {
+                                             $(this).prev().hide(800,arguments.callee)
+                                         })
+
+    (6) 鼠标点击显示 .show()
+            $('div').show()      如果里面有参数.show(500),表示500毫秒后完成显示
+
+    (7)  $("div>img").last("img")     div里面的最后一个img  搭配.prev()可以切换到上面一个
+    (8)  $("div>img").first("img")    div里面的第一个img  搭配.next() 可以切换到下面一个
+    (9)  $(".box").slideUp(500)       向上滑入，进入到别的组件
+    (10) $(".box").slideDown(500)     向下滑出，进入主组件
+    (11) $(".box").slideToggle        向上、下切换
+    (12) $(".box").fadeIn(1000)       淡入
+    (13) $(".box").fadeOut(1000)      淡出
+    (14) $(".box").fadeToggle(1000)   淡入、出切换
+    (15) $(".box").fadeTo(1000, 0)    1秒后透明度变为0
+    (16) $(".box").animate({"width":"300px","height":"300px","left":"300px"},1000,function() {})   动画
+         $("#txt").focus();  $(".txt").trigger("focus")  都是让input type="text" 获取焦点
+
+=======================================================================================================
+    添加元素的方法
+    var obj = $("<p>XXX<p>")
+    (17) $(".box").html(obj)           在类名为.box中添加标签，但是html会覆盖盒子里的所有标签
+    (18) $(".box").append(obj)         在盒子里按先进排在最前面的方式添加标签           (组件1 组件2 组件3 组件4)
+    (19) $(".box").prepend(obj)        在盒子里按先进排在最后面的方式添加标签           (组件4 组件3 组件2 组件1)
+    (20) $(".box").after(obj)          在盒子外(后面)按先进排在最后面的方式添加标签     () 组件4 组件3 组件2 组件1
+    (21) $(".box").before(obj)         在盒子外(前面)按先进排在最前面的方式添加标签     组件1 组件2 组件3 组件4 ()
+    (22) obj.appenTo($(".box"))        跟append差不多，只是位置互换了
+    (23) var b = [];  b.push("<p>12</p>")  ==> b = ["<p>12</p>"] 然后用$(".box").html(b) ==> 可以把[]里的内容解析出来
+    (24) var obj = $("<a></a>")   obj.attr("title","好厉害") 添加标签属性  obj.attr("title")是查看title的属性值
+    (25) prop()                        可以查看属性，现在的我只知道可以看checkbox的属性通过$("#ck").prop("checked")
+                                       查看是否被选中，如果被选中会返回true，如果要设置选中属性可以$("#ck").prop("checked", true)
+                                       全选的两种方法$(".box>input").prop("checked",true)或者(".box :checkbox").prop("checked",true)
+                                       $(".box checkbox").length 是选择项的数量
+                                       $(".box checked").length  是选中的数量
+
+
+
+    还可以通过把html里的标签通过$(".box1").append($(".box>p"))方法，把.box 里的 p标签 放到 .box1里，而box里的p消失
+
+    移除元素的方法
+    (23) $(".box").html("")               移除盒子的所有内容
+    (24) $(".box").empty()                移除盒子的所有内容
+    (25) $(".box").remove()               连盒子一起移除
+===========================================================================================================
+    (26) var obj = $(".box").clone()      把盒子拷贝，在内存里保存
+
+
+3.属性函数
+    $('#btn') .val('黑')                       改变的是value值,如果.val()就是获取ID=btn的value内容
+    $('p').text("这是一个有颜色的div")          改变的是innerText,如果.text()就是获取p标签的text内容
+    $('p').html("这是一个有颜色的div")          改变的是innerHTML,如果.text()就是获取p标签的html内容
+    $('div').css("backgroundColor","yellow")   1.改变的是样式,如果只设置单个样式$("#dv").css("backgroundColor","yellow");
+                                               2.如果设置多个$("#dv").css({"width":"300px","height":"200px","backgroundColor":"yellow"});
+                                               3.也可以这样$("#dv").css("backgroundColor","yellow").css("height","200px")
+
+    $('.box').addClass('red yellow')           添加样式，red在style中是类名.red 在刮号中不用. ,就是在移除样式后，不知道为什么不能再次添加样式
+    $('.box').removeClass('red yellow')        移除样式red和yellow   如果是() 移除所有样式
+    $('.box').hasClass('red')                  查看是否应用了.red样式
+    $('.box').toggleClass('red')               切换.red 样式
+    $(".box").remove()                         刮号里没有参数的，直接删去这个标签，不复存在，但是有点生硬，最好搭配
+                                               $('.box').hide(500, function() {$(this).remove()})
+    $(".box").width()                          盒子的宽度，()是获取盒子的宽度，如果里面有参数，就是控制盒子的宽度  数字类型 .css()是字符串类型
+    $(".box").height()                         盒子的高度，()是获取盒子的高度，如果里面有参数，就是控制盒子的高度  数字类型 .css()是字符串类型
+    $(".box").offset()                         盒子的定位，({"left":300,"top":500})设置定位，如果要查询可以用.offset()查看top和left的参数，如果只看一个参数.offset().lefts
+    $("#box").scrollTop()                      屏幕滚动到的位置(垂直位置)
+    $("#box").scrollLeft()                     屏幕滚动到的位置(横向位置)
+    $("window").scroll()                       监听屏幕的情况
+
+
+
+
+
+
+4.注意事项:
+    (1).在事件函数前必须加$(function() {...})，然后把事件函数放到...里
+    (2).DOM中的顶级对象:docuemnt---页面中的顶级对象,docuemnt点出来的是DOM中的属性和方法
+    (3).BOM中的顶级对象:window----浏览器中的顶级对象,window点出来的是浏览器中的属性和方法
+    (4).jQuery的顶级对象:jQuery---$, $点出来的是jQuery中的方法
+
+5.页面完全加载完后触发
+    window.onload = () => {}
+    $(window).load(() => {})
+
+6.页面的基本标签加载完后触发
+    $(document).ready(() => {})
+
+7.页面基本标签加载后执行
+    jQuery(() => {})  ==　$(function() {})  ==  $( () => {})
+
+8.浏览器里的this
+   在jquery中 $(this)
+   在原生  this
+
+    $('#btn').click(() => {$(this).css()})
+
+9. event对象
+    event指，当前便签的属性(绑定了事件函数，event.target:DOM元素)
+    event.delegateTarget  什么父DOM元素绑定了事件
+    event.currentTarget： 什么子DOM元素绑定了事件
+    event.target： DOM元素
+
+10.监听键盘的编码
+    $(document).keydown(function(e){e.keyCode}
+
+11. 取消冒泡事件
+       子组件添加事件是在最后 return false
+11.链式编程
+    当链式编程发生断链现象用end()连接他们
+    $(this).prevAll().css("backgroundColor","yellow").end().nextAll().css("backgroundColor","blue");
+
+    $(".box").bind()进行链式编程
+    绑定事件函数方法一(多个事件多个函数)
+    $("#btn").bind(
+                   {"click":function(){console.log(1)},
+                   "mouseover":function(){console.log(2)}
+                 })
+    绑定事件函数方法二(多个事件公用一个函数)
+    $("#btn").bind(
+                   "click mouseover":function(){console.log(1)
+                 })
+
+    $("#btn").unbind("click")   解除bind绑定的事件,但是也可以解除delegate,on绑定的事件但是父项和子项一起被解除了
+
+    $(".box").delegate()           第一个参数:添加DOM元素，第二个是事件函数，第三个是函数 $("#dv").delegate("p","click",function () {alert("我被点了");让元素拥有这个事件函数的功能，点一下，有几个这样的元素就要执行几次这个函数
+
+    $(".box").undelegate("p","click")  解除.box里p标签的click事件，这个事件必须由delegate()绑定
+
+    $(".box").on()                 第一个参数:事件函数, [第二个是添加DOM元素]，第三个是函数$("#dv").on("click","p",function () {alert("我被点了");});  注意他的顺序跟delegate不一样，也是让元素拥有事件函数的功能，也是多少元素执行多少次函数,也可以多个事件绑定
+                                   盒子里的标签猜才能绑定事件，不然只能用append添加事件后才行，一般可以用$("#btn").on("click", function(){}),跟bind差不多
+    $(".box").off("click")         解除被on绑定的事件，比如click,但是也可以解除delegate,on绑定的事件但是父项和子项一起被解除了
+    所以我的意思最好用什么绑定就用相对应的解绑的函数解绑
+
+
+
+不懂的地方
+
+find()   children() 的区别   stop()
+removeClass()移除样式  会移除所有的样式，然后无法再次添加样式
+end()
+
+在新的jquery中
+$(window).load( () => {})报错  ===  window.onload = () => {}
+
+在事件中$('#btn')不能使用多次，
+$('.box').text("这是一个有颜色的div").css("backgroundColor","yellow");只能这么使用
+
+if中使用$('#btn')会报错
+<select  multiple="multiple">    multiple="multiple"可以把选择项释放出来
+
+$(".btn").trigger("click")
+$(".btn").triggerHandler("click")
+
+通过数组的方法 var b = [];  b.push("12")  ==> b = ["12"] 然后用html(b) ==> 可以把[]里的内容解析出来
