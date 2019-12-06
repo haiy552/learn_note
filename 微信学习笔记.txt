@@ -1,0 +1,12 @@
+在外面的app.json中pages是整个组件的加载顺序，当添加一段目录后，开发者工具会帮你自动创建这个目录和里面的4个文件
+                  window是控制窗口的样式,backgroundTextStyle dark/light 是下拉加载的等待符号颜色，只有这两种参数选择
+				                         navigationBarBackgroundColor 导航栏背景颜色
+										 navigationBarTitleText       标题
+										 navigationBarTextStyle       导航栏标题颜色
+										 enablePullDownRefresh:true   是否开启下拉全局更新
+										 backgroundColor              窗口背景颜色
+										 
+										 
+wxml  html5
+text  span
+view  div
