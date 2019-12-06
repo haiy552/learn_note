@@ -1,32 +1,32 @@
 1.vm.$set(vm.list, 1, 'lemon');  设置数组
 2.vm.$set(vm.info, 'name', 'female');  设置对象{}, 如果对象里有name就修改参数，如果没有添加参数
 3.arr.some(item){return 条件}  返回 true false
-4.公共组件与私有组件不能相互引用
-5.props: [''] 在子组件中存在，用于父组件向子组件传值，''里的是子组件的参数，而在html里用父组件参数
-6.$emit(函数方法)，父组件向子组件传函数
-7.通过methods函数hub.$emit('绑定兄弟子组件-event')，然后通过mounted监听事件hub$on('自己-event')，达到数据交换 day3-11
-8.插槽: 把父组件里的值插入规定好的子组件html5内，特点<solt></solt>  day03 -12 -13 -14  
+
 9.jquery  里的$.ajax(url: 'http://localhost:3000/data',success: function(data) {console.log(data)})
 10.let p = new Promise(funciton(resole,reject){if(3>2){resole('正确')}else{reject('错误')}})，resole执行true|reject执行false,Promise会返回给p,通过p.then(function(data){console(data)}) "不够严谨"还需要function(info){console.log(info)}接受误差处理
-11.
-关于饿了么vue练习
-1.对于history没写
-2.城市没写
-3.header没写
-4.热门城市
-5.所有城市
-
 
 
 vue 的不懂的地方
-axios,过滤器,跨域 $on,watch
+$set，axios,过滤器,跨域 $on,watch，mapstate,mapgetter,router,过渡动画，keep-alive
 
 vue
-methods
-mounted
+vue.extend()构建组件
+keep-alive: 被包裹在keep-alive中的组件的状态将会被保留，例如我们将某个列表类组件内容滑动到第100条位置，那么我们在切换到一个组件后再次切换回到该组件，该组件的位置状态依旧会保持在第100条列表处
+
+
+
+
+            
+
+
+
+
+
 子组件获取父组件data, props  在父组件中子组件的标签里:子组件变量=“父组件变量”,然后在子组件里用props，接受子组件变量，然后在标签里{{子组件变量}}
 子组件获取父组件事件, $emit  在父组件中子组件的标签里@子组件事件=“父组件事件”,然后在子组件methods里用$emit("子组件事件",参数)
-$ref的用法    先在html里ref="id" 然后在vue里用$refs.id,能获取这个dom，如果是refs是获取全部带ref属性的dom
+ref的用法    先在html里ref="id" 然后在vue里用$refs.id,能获取这个dom，如果是refs是获取全部带ref属性的dom
+vue.set(target, key, value)  target:要更改的data参数，key:再次定位data参数里的索引，value改变后的参数
+                             比如items: [{mag:"zs",id:1},{mag:"ls",id:2},{mag:"ww",id:3}],然后在methods方法里用vue.set(this.items,0,{mag:"zs",id:'10'}) ==>  items: [{mag:"zs",id:10},{mag:"ls",id:2},{mag:"ww",id:3}]
 
 插槽 slot,如果父组件里有参数，那就会导入到slot标签里     https://www.jianshu.com/p/cb6209b10070
      v-slot,首先在子组件里设定name="名字"但标签是slot,然后父组件里<template v-slot:名字>参数</template>，只能导入一次,最后一次有效
@@ -35,10 +35,15 @@ $ref的用法    先在html里ref="id" 然后在vue里用$refs.id,能获取这个dom，如果是refs
      slot作用域,在子组件里slot 带属性,然后父组件里接收<template slot-scope="接收的参数名">接收的数据为数组，其实跟上面的一样
 
 
+
+router
+this.$route.params 获取url，在路由中设置props:true,可以省略$router.params ==> 比如获取路径上/home/page1,id就为page1 ==> this.id就行了   
+beforeRouteUpdate(to,from,next)
+
 vuex
 引用:import store文件，然后跟router一样放入vue内
-state 是存放静态属性， {{this.$states.count}} 可以访问count属性，但是最好不要这样做
-getters  跟计算机属性一样，具有监听的功能   {{this.$store.getters.getStateCount}} getStateCount是getters里的方法
+state     是存放静态属性， {{this.$states.count}} 可以访问count属性，但是最好不要这样做
+getters   跟计算机属性一样，具有监听的功能，在store中getStateCount: function(state){return state.count+1}   然后在子组件中映射{{this.$store.getters.getStateCount}}
 mutations 方法  mutations里的方法add(state){state.count++;}， 然后在引入到组件方法里this.$store.commit("add"), 然后放入html里
 actions   vue不建议直接在子组件中用this.$store.commit("add"),而是在actions中用，addFun(context){context.commit("add")},然后在放入子组件中addFun(){this.$store.dispatch("add")}
           具体流程: 首先在state中设置参数，然后在mutations中设置方法，然后在actions再次包装方法，然后在放入子组件的方法里在再次包装
