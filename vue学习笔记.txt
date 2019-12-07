@@ -7,10 +7,17 @@
 
 
 vue 的不懂的地方
-$set，axios,过滤器,跨域 $on,watch，mapstate,mapgetter,router,过渡动画，keep-alive
+axios,过滤器,跨域 $on,watch，mapstate,mapgetter,router,过渡动画，keep-alive
 
 vue
 vue.extend()构建组件
+v-自定义方法   在vue内设置directive
+computed       计算机属性,在html中{{映射出来}}，主要有缓存，后期会被getters替代
+watch          监视,
+
+属性
+event.target   当前dom，看看跟ref有什么不同
+:disabled="flag"   当前的input是否被激活，flag是data里的属性
 keep-alive: 被包裹在keep-alive中的组件的状态将会被保留，例如我们将某个列表类组件内容滑动到第100条位置，那么我们在切换到一个组件后再次切换回到该组件，该组件的位置状态依旧会保持在第100条列表处
 
 
