@@ -1,13 +1,5 @@
-1.vm.$set(vm.list, 1, 'lemon');  设置数组
-2.vm.$set(vm.info, 'name', 'female');  设置对象{}, 如果对象里有name就修改参数，如果没有添加参数
-3.arr.some(item){return 条件}  返回 true false
-
-9.jquery  里的$.ajax(url: 'http://localhost:3000/data',success: function(data) {console.log(data)})
-10.let p = new Promise(funciton(resole,reject){if(3>2){resole('正确')}else{reject('错误')}})，resole执行true|reject执行false,Promise会返回给p,通过p.then(function(data){console(data)}) "不够严谨"还需要function(info){console.log(info)}接受误差处理
-
-
 vue 的不懂的地方
-axios,过滤器,跨域 $on,watch，mapstate,mapgetter,router,过渡动画，keep-alive
+过渡动画，keep-alive
 
 vue
 vue.extend()构建组件
@@ -22,14 +14,7 @@ keep-alive: 被包裹在keep-alive中的组件的状态将会被保留，例如我们将某个列表类组件
 
 
 
-
-            
-
-
-
-
-
-子组件获取父组件data, props  在父组件中子组件的标签里:子组件变量=“父组件变量”,然后在子组件里用props，接受子组件变量，然后在标签里{{子组件变量}}
+子组件获取父组件data, props  在父组件中子组件的标签里:子组件变量=“父组件变量”,然后在子组件里用props，接受子组件变量，然后在标签里{{子组件变量}}，也可以限制类型，type:String,还可以设置默认参数
 子组件获取父组件事件, $emit  在父组件中子组件的标签里@子组件事件=“父组件事件”,然后在子组件methods里用$emit("子组件事件",参数)
 ref的用法    先在html里ref="id" 然后在vue里用$refs.id,能获取这个dom，如果是refs是获取全部带ref属性的dom
 vue.set(target, key, value)  target:要更改的data参数，key:再次定位data参数里的索引，value改变后的参数
@@ -44,7 +29,21 @@ vue.set(target, key, value)  target:要更改的data参数，key:再次定位data参数里的索
 
 
 router
-this.$route.params 获取url，在路由中设置props:true,可以省略$router.params ==> 比如获取路径上/home/page1,id就为page1 ==> this.id就行了   
+静态路由路径:
+             <router-link to="/user/1">xx<router-link>,router中path可以是静态paht:'/user/1'也可以是动态paht:'/user/:id'
+动态路由路径:	
+             <router-link :to="{name:'动态参数',params:{id:动态参数}}">xxx<router-link>意思就是比如你要搜索一个东西，然后name就是设定是这个东西,然后在route内索引,然后跳转到这个路径	 
+
+
+动态router的props的用法:
+                    1.props: true /*意思是绑定data,比如在path中设置好props:true; 当跳转url时子组件中props接受传输过来的参数，然后放到html中{{参数}}
+					2.但是只是传值,不获取url上的参数,可以用props:{uname:'li',age:12}，子组件要用props接收
+                    3.props: route => ({ uname: 'zs', age: 20, id: route.params.id }), 可以获取url上的id,子组件要用props接收
+					
+后退事件:
+           this.$router.go(-1)	
+路由跳转事件:
+           this.$router.push('/userinfo/' + id)	   如果要带参数params: { userId: 123 }
 beforeRouteUpdate(to,from,next)
 
 vuex
@@ -55,9 +54,13 @@ mutations 方法  mutations里的方法add(state){state.count++;}， 然后在引入到组件方
 actions   vue不建议直接在子组件中用this.$store.commit("add"),而是在actions中用，addFun(context){context.commit("add")},然后在放入子组件中addFun(){this.$store.dispatch("add")}
           具体流程: 首先在state中设置参数，然后在mutations中设置方法，然后在actions再次包装方法，然后在放入子组件的方法里在再次包装
 
-mapstate  先在子组件导入import { mapState } from 'vuex'
-
+mapstate,mapgetter  先在子组件导入import { mapState } from 'vuex'
+                    computed: {
+                               ...mapState(['inputValue', 'viewKey']),        接收State里的参数
+                               ...mapGetters(['unDoneLength', 'infolist'])},  接收Getters里的参数
+  
 		  
+vuex 模块化。。。。
 
 关于scss的语法
 scoped是样式仅限于局部
