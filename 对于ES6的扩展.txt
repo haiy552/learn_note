@@ -1,3 +1,8 @@
+箭头函数和普通函数this的解读:
+箭头函数的this没有对使用者进行绑定，this会指向window，如果前面的this的绑定了，下面的this会绑定之前的this所绑定的使用者
+普通函数的this会绑定使用者，当没有使用者时，他会指向windows，而不会指向前面的this绑定的使用者
+如果没有this，可以直接用箭头函数
+==============================================================
 const arr = [
   { foo: 'a', name: 'aaa' },
   { foo: 'b', name: 'bbb' },
@@ -5,7 +10,7 @@ const arr = [
 ]
 var item = arr.find(i => i.foo === 'b')  //{ foo: 'b', name: 'bbb' }
 
-
+arr.forEach(item => item.name)  简化了for语句
 indexs(): 遍历下标索引
 values(): 遍历value  
 entries(): 遍历下标索引和value
@@ -20,9 +25,9 @@ let newArr = arr.map(n => n + 1);  //[2, 3, 4]
 
 let arr = ['a','b','c'];
 console.log(arr.includes('d')); //返回是否包含此元素，返回布尔值
-
-
-
+=================================================================================
+let list = [1,2,3]   list.map(item => {item})   /* [1,2,3]
+let arr = [{name:ls},{name:zs}]  arr.map(item => {item.name})    /* [ls,zs]   通过join("")转字符串 lszs
 
 
 __filename绝对路径+文件名
@@ -413,4 +418,3 @@ f.apply(null, arr)
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-还有import的用法
