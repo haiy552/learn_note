@@ -310,4 +310,8 @@ console.log(arr);
 
     join就是可以在数组的参数上添加符号，或者数字
 
-
+==================================================================
+点击增加样式
+li.addEventListener('click', function(){
+	this.classList.toggle('completed')
+})

@@ -3,32 +3,45 @@
 普通函数的this会绑定使用者，当没有使用者时，他会指向windows，而不会指向前面的this绑定的使用者
 如果没有this，可以直接用箭头函数
 ==============================================================
-const arr = [
-  { foo: 'a', name: 'aaa' },
-  { foo: 'b', name: 'bbb' },
-  { foo: 'c', name: 'ccc' },
+const arrs = [
+  { foo: 'a', name: 'aaa', age: 1},
+  { foo: 'b', name: 'bbb', age: 3 },
+  { foo: 'c', name: 'ccc', age: 4 },
 ]
-var item = arr.find(i => i.foo === 'b')  //{ foo: 'b', name: 'bbb' }
+var item = arr.find(arr => arr.foo === 'b')  //{ foo: 'b', name: 'bbb' }     回调函数，索引条件是当arr.foo === 'b'  返回的是这个目标 ，缺点当找到后马上return，不会往下运行了
+var item = arr.findIndex(arr => arr.foo === 'b')  //1   回调函数，索引条件是当arr.foo === 'b'  返回的是这个目标的下标  
+var item = arr.some(arr => arr.age > 2)  //true   回调函数，索引条件是当arr.age > 2  返回的是这个数组有没有比2大的参数，其中一个有就返回ture
+var item = arr.every(arr => arr.age > 2)  //flase   回调函数，索引条件是当arr.age > 2  返回的是这个数组有没有比2大的参数，其中一个没有比2大，就返回false
+
 
 arr.forEach(item => item.name)  简化了for语句
 indexs(): 遍历下标索引
 values(): 遍历value  
 entries(): 遍历下标索引和value
 let arr = ['a','b','c'];
+迭代器通过enteries每一次迭代出一组数组[index, item]
 for(let [index, item] of arr.entries()) {
 	console.log(index, item);
 }
 
 let arr = [1,2,3];
 arr.forEach(n => console.log(n));  //1 2 3
+map只针对数组，如果不是数组，通过Array.from()转化后用map，但是Array.from(nodeArrs, nodeArr => nodeArr.textContent),这个函数可以把nodeArrs转化成数组，然后第二个是回调函数跟map类似
 let newArr = arr.map(n => n + 1);  //[2, 3, 4]
 
+arr.reduce((pre,cur) => {pre + cur}, 0)  => reduce 用于数组里的参数相加, pre:前一个数 cur: 后一个数, 0是初始值，pre = 0
+
+new Array(7) 就是 [undefined *7]  new Array(1, 2) 就是[1, 2]  为了只是传入一个数 Array.of(7)  [7]
 let arr = ['a','b','c'];
 console.log(arr.includes('d')); //返回是否包含此元素，返回布尔值
-=================================================================================
-let list = [1,2,3]   list.map(item => {item})   /* [1,2,3]
-let arr = [{name:ls},{name:zs}]  arr.map(item => {item.name})    /* [ls,zs]   通过join("")转字符串 lszs
 
+
+const your = ['zs', 'ls', 'ww']  const me = ['cc', 'zf', 'lb']  然后我们把他们合并 let your_me = your.comcat(me) 变成了['zs', 'ls', 'ww', 'cc', 'zf', 'lb'], 
+但是let new_your_me = your_me 两个在内存中的索引相同，出现浅拷贝，当其中一个改变参数时另一个也会发生改变，所以 let new_your_me = [...your_me]  深拷贝
+
+const name = 'zs' ;const age = 12  const zf = {name, age}  效果就是{name: 'zs', age: 12} 在es6中可以简化。
+const keys = ['name', 'age'], const values = ['1', '2']  const larvist = {[keys.shift()]: values.shift()}  shift() 表示循环keys.shift() 就是当前下标的参数
+=================================================================================
 
 __filename绝对路径+文件名
 __dirname 绝对路径
