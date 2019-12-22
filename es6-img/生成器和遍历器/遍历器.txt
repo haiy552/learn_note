@@ -1,0 +1,11 @@
+clost arrs = [1,2,3]
+
+clost new_arrs_value = arrs.entries()
+new_arrs_value.next() // 1
+new_arrs_value.next() // 2
+值的遍历器
+
+clost new_arrs_key = arrs.keys()
+new_arrs.next() // 0
+new_arrs.next() // 1
+索引值的遍历器
