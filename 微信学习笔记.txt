@@ -10,6 +10,6 @@ html和微信标签
 wxml  html5
 text  span
 view  div
-block    在页面渲染后标签会消失掉
+block    在页面渲染后标签会消失掉  
 
 
