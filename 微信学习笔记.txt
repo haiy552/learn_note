@@ -5,8 +5,11 @@
 										 navigationBarTextStyle       导航栏标题颜色
 										 enablePullDownRefresh:true   是否开启下拉全局更新
 										 backgroundColor              窗口背景颜色
-										 
-										 
+
+html和微信标签
 wxml  html5
 text  span
 view  div
+block    在页面渲染后标签会消失掉
+
+
